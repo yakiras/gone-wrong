@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class _Script_PlayerMovement : MonoBehaviour
 {
-    public float speed = 12f;
+    public float walkSpeed = 12f;
+    public float sprintSpeed = 24f;
     public float gravity = -9.81f;
     public CharacterController controller;
 
@@ -14,6 +15,7 @@ public class _Script_PlayerMovement : MonoBehaviour
 
     Vector3 velocity;
     bool isGrounded;
+    float currentSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -31,11 +33,24 @@ public class _Script_PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
+        {
+            currentSpeed = sprintSpeed;
+            if (Camera.main.fieldOfView < 100f)
+                Camera.main.fieldOfView += 0.2f;
+        }
+        else
+        {
+            currentSpeed = walkSpeed;
+            if (Camera.main.fieldOfView > 90f)
+                Camera.main.fieldOfView -= 0.2f;
+        }
+
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
-        controller.Move(move * speed * Time.deltaTime);
+        controller.Move(move * currentSpeed * Time.deltaTime);
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
