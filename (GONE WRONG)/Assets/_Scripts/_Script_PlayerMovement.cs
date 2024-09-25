@@ -13,6 +13,9 @@ public class _Script_PlayerMovement : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
+    public Vector3 lastPos;
+    public bool isMoving;
+
     Vector3 velocity;
     bool isGrounded;
     float currentSpeed;
@@ -54,5 +57,16 @@ public class _Script_PlayerMovement : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
+
+        if (transform.position != lastPos)
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
+        lastPos = transform.position;
     }
 }
