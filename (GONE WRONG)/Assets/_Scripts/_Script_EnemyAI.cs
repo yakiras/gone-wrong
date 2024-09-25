@@ -4,7 +4,7 @@ using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class _Script_EnemyAI : MonoBehaviour
 {
     GameObject player;
 
@@ -25,8 +25,8 @@ public class EnemyAI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player");
-        patrolling = false;
-        chasing = true;
+        patrolling = true;
+        chasing = false;
     }
 
     // Update is called once per frame
@@ -34,6 +34,14 @@ public class EnemyAI : MonoBehaviour
     {
         if (patrolling) Patrol();
         if (chasing) Chase();
+
+        bool canSeePlayer = gameObject.GetComponent<_Script_FieldOfView>().canSeePlayer;
+        bool playerIsMoving = player.GetComponent<_Script_PlayerMovement>().isMoving;
+        if (canSeePlayer && playerIsMoving) 
+        {
+            chasing = true;
+            patrolling = true;
+        }
     }
 
     void Chase() 

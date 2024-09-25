@@ -6,12 +6,12 @@ using UnityEngine;
 // represents that the enemy can see what ever the green line is attached to.
 
 
-[CustomEditor(typeof(FieldOfView))]
-public class FieldOfViewEditor : Editor
+[CustomEditor(typeof(_Script_FieldOfView))]
+public class _Script_FieldOfViewEditor : Editor
 {
     private void OnSceneGUI()
     {
-        FieldOfView fov = (FieldOfView)target;
+        _Script_FieldOfView fov = (_Script_FieldOfView)target;
         Handles.color = Color.white;
         Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.radius);
 

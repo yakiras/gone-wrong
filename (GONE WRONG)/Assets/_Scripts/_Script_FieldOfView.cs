@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FieldOfView : MonoBehaviour
+public class _Script_FieldOfView : MonoBehaviour
 {
     // Radius that the view can be seen
     public float radius;
