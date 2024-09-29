@@ -4,7 +4,7 @@ using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class _Script_EnemyAI : MonoBehaviour
+public class _Script_SightMonsterAI : MonoBehaviour
 {
     GameObject player;
 
@@ -46,11 +46,13 @@ public class _Script_EnemyAI : MonoBehaviour
 
     void Chase() 
     {
+        agent.speed = 12;
         agent.SetDestination(player.transform.position);
     }
 
     void Patrol() 
     {
+        agent.speed = 6;
         if (!walkpointSet) 
             SearchForDest();
         if (walkpointSet)

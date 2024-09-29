@@ -181,7 +181,7 @@ NavMeshAgent:
   m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 240
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -190,6 +190,29 @@ NavMeshAgent:
   m_BaseOffset: 0.1861707
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!136 &149620413
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149620403}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.31
+  m_Height: 0.7606569
+  m_Direction: 1
+  m_Center: {x: 0.0000039339066, y: -0.19415775, z: -0.0071498286}
 --- !u!1 &702012567
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +224,8 @@ GameObject:
   - component: {fileID: 702012569}
   - component: {fileID: 702012568}
   - component: {fileID: 702012570}
+  - component: {fileID: 702012571}
+  - component: {fileID: 702012572}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -275,6 +300,41 @@ MonoBehaviour:
     m_Bits: 1536
   lastPos: {x: 0, y: 0, z: 0}
   isMoving: 0
+--- !u!114 &702012571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702012567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8333ba63848fb494cb9d87226bf000ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!136 &702012572
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702012567}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.73
+  m_Height: 5.41
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +493,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MonsterModel_Base
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bf402937fdefedd4388eb52237a32ac5, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -446,6 +510,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bf402937fdefedd4388eb52237a32ac5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 149620408}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bf402937fdefedd4388eb52237a32ac5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 149620413}
   m_SourcePrefab: {fileID: 100100000, guid: bf402937fdefedd4388eb52237a32ac5, type: 3}
 --- !u!1 &847254855
 GameObject:
