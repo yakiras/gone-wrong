@@ -57,8 +57,8 @@ public class Prop : MonoBehaviour
     {
         if (Physics.Raycast(transform.position, Vector3.down, groundCheckDistance, groundLayer))
         {
-            propRB.velocity = Vector3.zero;
             propRB.isKinematic = true;
+            //propRB.velocity = Vector3.zero;
         }
     }
 }
