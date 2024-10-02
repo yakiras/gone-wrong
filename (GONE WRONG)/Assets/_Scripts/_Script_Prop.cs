@@ -6,7 +6,9 @@ public class Prop : MonoBehaviour
 {
     public LayerMask groundLayer;
     public float groundCheckDistance = 0.1f;
+    public float throwForce = 800f;
     public float lerpSpeed = 10f;
+
     public bool isGrabbed;
 
     private Rigidbody propRB;
@@ -47,10 +49,11 @@ public class Prop : MonoBehaviour
         propRB.isKinematic = false;
     }
 
-    public void throwProp()
+    public void throwProp(Transform playerCameraTrans)
     {
         drop();
-        //propRB.velocity = ;
+        Vector3 direction = playerCameraTrans.forward;
+        propRB.AddForce(direction * throwForce);
     }
 
     private void groundCheck()

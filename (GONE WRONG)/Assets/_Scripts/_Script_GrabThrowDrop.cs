@@ -30,9 +30,9 @@ public class GrabThrowDrop : MonoBehaviour
                 }
             }
         }
-        
+
         // Detect LMB
-        /*if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             if (Physics.Raycast(playerCameraTrans.position, playerCameraTrans.forward, out RaycastHit raycastHit, maxReach, ~pickUpLayerMask))
             {
@@ -40,10 +40,10 @@ public class GrabThrowDrop : MonoBehaviour
                 {
                     if (grabbedProp.isGrabbed)
                     {
-                        // THROW
+                        grabbedProp.throwProp(playerCameraTrans);
                     }
                 }
             }
-        }*/
+        }
     }
 }
