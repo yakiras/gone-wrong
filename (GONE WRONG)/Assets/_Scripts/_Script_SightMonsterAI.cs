@@ -5,19 +5,29 @@ using UnityEngine.AI;
 
 public class _Script_SightMonsterAI : MonoBehaviour
 {
+
+    // Used for transforming (set human and monster models inside the editor)
+    [SerializeField] private MeshFilter monsterMesh;
+    [SerializeField] private Mesh humanMesh;
+
     GameObject player;
 
     NavMeshAgent agent;
 
+    // Used for pathfinding, set inside editor
     [SerializeField] LayerMask groundLayer, playerLayer;
 
     Vector3 destPoint;
+
     // Does enemy already have a point it's walking to
     bool walkpointSet;
+
+    // Range that a random destination point can be set in
     [SerializeField] float range;
 
     bool patrolling;
     bool chasing;
+    bool stunned;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +41,16 @@ public class _Script_SightMonsterAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Used to test stun
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    StartCoroutine(Stun(5));
+        //    Debug.Log("---STUNNED---");
+        //}
+
+        if (stunned)
+            return;
+
         if (patrolling) Patrol();
         if (chasing) Chase();
 
@@ -39,7 +59,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
         if (canSeePlayer && playerIsMoving) 
         {
             chasing = true;
-            patrolling = true;
+            patrolling = false;
         }
     }
 
@@ -72,5 +92,22 @@ public class _Script_SightMonsterAI : MonoBehaviour
         {
             walkpointSet=true;
         }
+    }
+
+    // Changes monster's mesh from human to monster form.
+    void Transform()
+    {
+        monsterMesh.mesh = humanMesh;
+    }
+
+
+    //To use this method, do "StartCoroutine(Stun(5));" (duration is in seconds)
+    IEnumerator Stun(float duration)
+    {
+        stunned = true;
+        agent.isStopped = true;
+        yield return new WaitForSeconds(duration);
+        stunned = false;
+        agent.isStopped = false;
     }
 }

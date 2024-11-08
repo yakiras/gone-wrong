@@ -225,6 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0834bffadd28e24f872b12779d93f46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterMesh: {fileID: 149620418}
+  humanMesh: {fileID: 5779197439840542771, guid: d587d12aef9a3244b9eb7a6d498f1f06, type: 3}
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -280,6 +282,11 @@ CapsuleCollider:
 --- !u!4 &149620416 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bf402937fdefedd4388eb52237a32ac5, type: 3}
+  m_PrefabInstance: {fileID: 768908119}
+  m_PrefabAsset: {fileID: 0}
+--- !u!33 &149620418 stripped
+MeshFilter:
+  m_CorrespondingSourceObject: {fileID: -5754084199372789682, guid: bf402937fdefedd4388eb52237a32ac5, type: 3}
   m_PrefabInstance: {fileID: 768908119}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &561547383
