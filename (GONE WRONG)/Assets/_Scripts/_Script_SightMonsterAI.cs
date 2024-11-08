@@ -34,7 +34,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
         if (patrolling) Patrol();
         if (chasing) Chase();
 
-        bool canSeePlayer = gameObject.GetComponent<_Script_FieldOfView>().canSeePlayer;
+        bool canSeePlayer = gameObject.GetComponent<_Script_FieldOfView>().canSeePlayer && !_Script_PlayerBed.playerHiding;
         bool playerIsMoving = player.GetComponent<_Script_PlayerMovement>().isMoving;
         if (canSeePlayer && playerIsMoving) 
         {

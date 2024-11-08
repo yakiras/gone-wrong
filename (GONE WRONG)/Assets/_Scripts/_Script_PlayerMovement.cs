@@ -20,6 +20,8 @@ public class _Script_PlayerMovement : MonoBehaviour
     bool isGrounded;
     float currentSpeed;
 
+    public static bool movementDisabled = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +36,11 @@ public class _Script_PlayerMovement : MonoBehaviour
         if (isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
+        }
+
+        if (movementDisabled)
+        {
+            return;
         }
 
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
@@ -69,4 +76,5 @@ public class _Script_PlayerMovement : MonoBehaviour
 
         lastPos = transform.position;
     }
+
 }
