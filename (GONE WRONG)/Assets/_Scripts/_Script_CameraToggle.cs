@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class _Script_CameraToggle : MonoBehaviour
 {
-    private bool cameraOn;
+    public GameObject enemiesParent;
+    public float stunTime = 5;
+
+    private bool cameraOn; 
 
     // Start is called before the first frame update
     void Start()
@@ -21,15 +24,30 @@ public class _Script_CameraToggle : MonoBehaviour
             {
                 Debug.Log("Camera Toggle: On");
                 cameraOn = true;
-                // turn on camera
-                // enemy = monster
             }
             else
             {
                 Debug.Log("Camera Toggle: Off");
                 cameraOn = false;
-                // turn off camera
-                // enemy = mimic
+            }
+        }
+
+        if (cameraOn)
+        {
+            Transform[] enemyTransforms = enemiesParent.GetComponentsInChildren<Transform>();
+            foreach (Transform enemy in enemyTransforms)
+            {
+                GameObject enemyGameObj = enemy.gameObject;
+                Vector3 directionToTarget = enemyGameObj.transform.position - transform.position;
+                if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit))
+                {
+                    if (hit.collider.gameObject == enemyGameObj)
+                    {
+                        Debug.Log("Enemy in sight");
+                        enemyGameObj.GetComponent<_Script_SightMonsterAI>().TransformToMonster();
+                        StartCoroutine(enemyGameObj.GetComponent<_Script_SightMonsterAI>().Stun(stunTime));
+                    }
+                }
             }
         }
     }

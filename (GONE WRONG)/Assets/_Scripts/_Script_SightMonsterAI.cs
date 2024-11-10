@@ -9,6 +9,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
     // Used for transforming (set human and monster models inside the editor)
     [SerializeField] private MeshFilter monsterMesh;
     [SerializeField] private Mesh humanMesh;
+    [SerializeField] private Mesh sightMonsterMesh;
 
     GameObject player;
 
@@ -94,15 +95,21 @@ public class _Script_SightMonsterAI : MonoBehaviour
         }
     }
 
-    // Changes monster's mesh from human to monster form.
-    void Transform()
+    // Changes monster's mesh from monster to human form.
+    public void TransformToHuman()
     {
         monsterMesh.mesh = humanMesh;
     }
 
+    // Changes monster's mesh from human to monster form.
+    public void TransformToMonster()
+    {
+        monsterMesh.mesh = sightMonsterMesh;
+    }
+
 
     //To use this method, do "StartCoroutine(Stun(5));" (duration is in seconds)
-    IEnumerator Stun(float duration)
+    public IEnumerator Stun(float duration)
     {
         stunned = true;
         agent.isStopped = true;
