@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class _Script_CameraToggle : MonoBehaviour
 {
-    public GameObject enemiesParent;
     public float stunTime = 5;
+    public float depleteInterval = 5f;
+    public int depleteAmount = 5;
+
+    public GameObject enemiesParent;
     public _Script_PlayerCamera cameraClass;
 
     private bool cameraOn;
+    private int batteryLevel;
 
     // Start is called before the first frame update
     void Start()
     {
         cameraOn = false;
+        batteryLevel = 100;
     }
 
     // Update is called once per frame
@@ -21,11 +26,12 @@ public class _Script_CameraToggle : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (!cameraOn)
+            if (!cameraOn && batteryLevel > 0)
             {
                 Debug.Log("Camera Toggle: On");
                 cameraOn = true;
                 cameraClass.TurnOnCamera();
+                StartCoroutine(DepleteBattery());
             }
             else
             {
@@ -51,6 +57,34 @@ public class _Script_CameraToggle : MonoBehaviour
                         StartCoroutine(enemyGameObj.GetComponent<_Script_SightMonsterAI>().Stun(stunTime));
                     }
                 }
+            }
+        }
+    }
+
+    IEnumerator DepleteBattery()
+    {
+        while (cameraOn && batteryLevel > 0)
+        {
+            yield return new WaitForSeconds(depleteInterval);
+
+            batteryLevel -= depleteAmount;
+
+            Debug.Log("Battery Level: " + batteryLevel + "%");
+
+            if (batteryLevel <= 25)
+                cameraClass.UpdateBatteryLvl(1);
+            else if (batteryLevel <= 50)
+                cameraClass.UpdateBatteryLvl(2);
+            else if (batteryLevel <= 75)
+                cameraClass.UpdateBatteryLvl(3);
+            else
+                cameraClass.UpdateBatteryLvl(4);
+
+            if (batteryLevel <= 0)
+            {
+                Debug.Log("Out of battery!");
+                cameraOn = false;
+                cameraClass.TurnOffCamera();
             }
         }
     }

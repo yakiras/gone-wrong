@@ -12,6 +12,12 @@ public class _Script_PlayerCamera : MonoBehaviour
     public Sprite cameraRec;
     public Sprite cameraNoRec;
 
+    public Image batteryOverlay;
+    public Sprite battery4;
+    public Sprite battery3;
+    public Sprite battery2;
+    public Sprite battery1;
+
     float xRotation = 0f;
     bool cameraOn;
     bool isRec;
@@ -40,13 +46,34 @@ public class _Script_PlayerCamera : MonoBehaviour
     {
         cameraOn = false;
         cameraOverlay.enabled = false;
+        batteryOverlay.enabled = false;
     }
 
     public void TurnOnCamera()
     {
         cameraOn = true;
         cameraOverlay.enabled = true;
+        batteryOverlay.enabled = true;
         StartCoroutine(ToggleSprite());
+    }
+
+    public void UpdateBatteryLvl(int batteryLevel)
+    {
+        switch (batteryLevel)
+        {
+            case 4:
+                batteryOverlay.sprite = battery4;
+                break;
+            case 3:
+                batteryOverlay.sprite = battery3;
+                break;
+            case 2:
+                batteryOverlay.sprite = battery2;
+                break;
+            case 1:
+                batteryOverlay.sprite = battery1;
+                break;
+        }
     }
 
     IEnumerator ToggleSprite()
