@@ -23,7 +23,7 @@ public class _Script_PlayerDoor : MonoBehaviour
         {
             if (Physics.Raycast(playerCameraTrans.position, playerCameraTrans.forward, out RaycastHit raycastHit, maxReach, ~doorLayerMask))
             {
-                if (raycastHit.collider.TryGetComponent(out Component door))
+                if (raycastHit.collider.TryGetComponent(out Component door) && door.CompareTag("Door"))
                 {
                     doorHinge = door.transform.parent;
                     doorCollider = door.GetComponent<MeshCollider>();
