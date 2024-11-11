@@ -843,8 +843,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c2a67942e6237b43a7cbe0c34d68708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemiesParent: {fileID: 552513561}
   stunTime: 5
+  depleteInterval: 0.5
+  depleteAmount: 5
+  enemiesParent: {fileID: 552513561}
   cameraClass: {fileID: 963194229}
 --- !u!114 &702012575
 MonoBehaviour:
@@ -1394,6 +1396,11 @@ MonoBehaviour:
   cameraOverlay: {fileID: 456456420}
   cameraRec: {fileID: 21300000, guid: 026b549c14145eb478c5e19ecfd547f9, type: 3}
   cameraNoRec: {fileID: 21300000, guid: 1d1f5f8211002f74caea0a092818c1cc, type: 3}
+  batteryOverlay: {fileID: 1871111728}
+  battery4: {fileID: 21300000, guid: 7a7ac397f6293754995f3a0b2351d4c9, type: 3}
+  battery3: {fileID: 21300000, guid: f938d900f7c6a8840b1e0eedfe0db5d1, type: 3}
+  battery2: {fileID: 21300000, guid: 970afa05c8918d840a3929350e5bc379, type: 3}
+  battery1: {fileID: 21300000, guid: ce1ae42d2b17553459b817ac1bf0ea1d, type: 3}
 --- !u!1 &1006629171
 GameObject:
   m_ObjectHideFlags: 0
@@ -2301,7 +2308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

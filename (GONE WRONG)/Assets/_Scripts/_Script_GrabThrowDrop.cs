@@ -12,8 +12,8 @@ public class GrabThrowDrop : MonoBehaviour
 
     void Update()
     {
-        // Detect RMB
-        if (Input.GetMouseButtonDown(1))
+        // Grab/Drop (E)
+        if (Input.GetKeyDown(KeyCode.E))
         {
             if (Physics.Raycast(playerCameraTrans.position, playerCameraTrans.forward, out RaycastHit raycastHit, maxReach, ~pickUpLayerMask))
             {
@@ -31,7 +31,7 @@ public class GrabThrowDrop : MonoBehaviour
             }
         }
 
-        // Detect LMB
+        // Throw (LMB)
         if (Input.GetMouseButtonDown(0))
         {
             if (Physics.Raycast(playerCameraTrans.position, playerCameraTrans.forward, out RaycastHit raycastHit, maxReach, ~pickUpLayerMask))
