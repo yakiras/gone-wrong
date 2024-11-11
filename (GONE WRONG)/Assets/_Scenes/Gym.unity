@@ -845,7 +845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemiesParent: {fileID: 552513561}
   stunTime: 5
-  cameraClass: {fileID: 0}
+  cameraClass: {fileID: 963194229}
 --- !u!114 &702012575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1390,7 +1390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 500
   playerBody: {fileID: 702012569}
-  cameraOverlay: {fileID: 456456424}
+  cameraOverlay: {fileID: 456456420}
   cameraRec: {fileID: 21300000, guid: 026b549c14145eb478c5e19ecfd547f9, type: 3}
   cameraNoRec: {fileID: 21300000, guid: 1d1f5f8211002f74caea0a092818c1cc, type: 3}
 --- !u!1 &1006629171
