@@ -7,22 +7,15 @@ public class _Script_PlayerDoor : MonoBehaviour
 {
     public float maxReach = 5f;
     public float rotateSpeed = 3f;
-    public float openAngle = 90f;
+    public float openAngle = 45f;
 
     [SerializeField] private Transform playerCameraTrans;
     [SerializeField] private LayerMask doorLayerMask;
     private Transform doorHinge;
     private MeshCollider doorCollider;
-    private Quaternion closeRotation;
-    private Quaternion openRotation;
+    private Quaternion targetRotation;
     private bool isAnimating = false;
     private bool isOpen = false;
-
-    private void Start()
-    {
-        closeRotation = Quaternion.identity;
-        openRotation = Quaternion.Euler(0, openAngle, 0) * closeRotation;
-    }
 
     void Update()
     {
@@ -35,6 +28,9 @@ public class _Script_PlayerDoor : MonoBehaviour
                     doorHinge = door.transform.parent;
                     doorCollider = door.GetComponent<MeshCollider>();
                     doorCollider.enabled = false;
+
+                    targetRotation = isOpen ? Quaternion.Euler(0, doorHinge.rotation.y - openAngle, 0) : Quaternion.Euler(0, doorHinge.rotation.y + openAngle, 0);
+
                     isAnimating = true;
                     isOpen = !isOpen;
                 }
@@ -43,7 +39,6 @@ public class _Script_PlayerDoor : MonoBehaviour
 
         if (isAnimating)
         {
-            Quaternion targetRotation = isOpen ? closeRotation : openRotation;
             doorHinge.rotation = Quaternion.Slerp(doorHinge.rotation, targetRotation, Time.deltaTime * rotateSpeed);
 
             // Stop animating if we've reached the target rotation

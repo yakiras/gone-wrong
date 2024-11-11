@@ -6,8 +6,9 @@ public class _Script_CameraToggle : MonoBehaviour
 {
     public GameObject enemiesParent;
     public float stunTime = 5;
+    public _Script_PlayerCamera cameraClass;
 
-    private bool cameraOn; 
+    private bool cameraOn;
 
     // Start is called before the first frame update
     void Start()
@@ -24,11 +25,13 @@ public class _Script_CameraToggle : MonoBehaviour
             {
                 Debug.Log("Camera Toggle: On");
                 cameraOn = true;
+                cameraClass.TurnOnCamera();
             }
             else
             {
                 Debug.Log("Camera Toggle: Off");
                 cameraOn = false;
+                cameraClass.TurnOffCamera();
             }
         }
 
