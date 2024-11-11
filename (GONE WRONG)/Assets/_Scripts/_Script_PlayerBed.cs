@@ -26,14 +26,12 @@ public class _Script_PlayerBed : MonoBehaviour
     {
         if (other.CompareTag("HideZone"))
             canHide = true;
-        Debug.Log("enter");
     }
 
     void OnTriggerExit(Collider other)
     {
         if (other == bedCollider)
             canHide = false;
-        Debug.Log("exit");
     }
 
     void EnterHiding()
