@@ -34,11 +34,14 @@ public class GrabThrowDrop : MonoBehaviour
                     if (obj.CompareTag("Battery"))
                     {
                         _Script_CameraToggle.batteriesLeft++;
+                        Destroy(obj);
                         Debug.Log("Got 1 battery!");
                     }
                     else if (obj.CompareTag("Key"))
                     {
                         // TO-DO: put key in inventory
+                        Destroy(obj);
+                        Debug.Log("Got key!");
                     }
                 }
             }
