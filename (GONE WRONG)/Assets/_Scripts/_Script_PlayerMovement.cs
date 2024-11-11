@@ -22,13 +22,19 @@ public class _Script_PlayerMovement : MonoBehaviour
 
     public static bool movementDisabled = false;
 
-    // Start is called before the first frame update
+    // Footstep SFX
+    private AudioSource audioSource;
+    public AudioClip[] walkClips;
+    public AudioClip[] runClips;
+    public float walkInterval = 0.5f;
+    public float runInterval = 0.25f;
+    private float stepTimer;
+
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
@@ -48,12 +54,28 @@ public class _Script_PlayerMovement : MonoBehaviour
             currentSpeed = sprintSpeed;
             if (Camera.main.fieldOfView < 100f)
                 Camera.main.fieldOfView += 0.2f;
+
+            stepTimer -= Time.deltaTime;
+            if (stepTimer <= 0f)
+            {
+                PlayRunSound();
+                stepTimer = runInterval;
+            }
         }
         else
         {
             currentSpeed = walkSpeed;
             if (Camera.main.fieldOfView > 90f)
                 Camera.main.fieldOfView -= 0.2f;
+            if (Input.GetKey(KeyCode.W))
+            {
+                stepTimer -= Time.deltaTime;
+                if (stepTimer <= 0f)
+                {
+                    PlayWalkSound();
+                    stepTimer = walkInterval;
+                }
+            }
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -77,4 +99,23 @@ public class _Script_PlayerMovement : MonoBehaviour
         lastPos = transform.position;
     }
 
+    void PlayWalkSound()
+    {
+        if (walkClips.Length > 0)
+        {
+            // Choose a random walk clip to play
+            AudioClip clip = walkClips[Random.Range(0, walkClips.Length)];
+            audioSource.PlayOneShot(clip);
+        }
+    }
+    
+    void PlayRunSound()
+    {
+        if (runClips.Length > 0)
+        {
+            // Choose a random run clip to play
+            AudioClip clip = runClips[Random.Range(0, runClips.Length)];
+            audioSource.PlayOneShot(clip);
+        }
+    }
 }
