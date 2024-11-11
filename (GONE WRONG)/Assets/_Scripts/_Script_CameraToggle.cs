@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class _Script_CameraToggle : MonoBehaviour
 {
+    public static int batteriesLeft;
+
     public float stunTime = 5;
-    public float depleteInterval = 5f;
+    public float depleteInterval = 0.5f;
     public int depleteAmount = 5;
 
     public GameObject enemiesParent;
@@ -19,11 +21,13 @@ public class _Script_CameraToggle : MonoBehaviour
     {
         cameraOn = false;
         batteryLevel = 100;
+        batteriesLeft = 1;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // Toggle camera on/off
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (!cameraOn && batteryLevel > 0)
@@ -39,6 +43,17 @@ public class _Script_CameraToggle : MonoBehaviour
                 cameraOn = false;
                 cameraClass.TurnOffCamera();
             }
+        }
+
+        // Replace battery
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (batteriesLeft > 0)
+            {
+                batteryLevel = 100;
+                batteriesLeft--;
+            }
+            Debug.Log($"Remaining Batteries: {batteriesLeft}");
         }
 
         if (cameraOn)

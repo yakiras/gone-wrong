@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - HideZone
+  - Battery
+  - Key
+  - Door
   layers:
   - Default
   - TransparentFX
