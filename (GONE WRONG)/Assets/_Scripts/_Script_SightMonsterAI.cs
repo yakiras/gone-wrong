@@ -30,6 +30,9 @@ public class _Script_SightMonsterAI : MonoBehaviour
     bool chasing;
     bool stunned;
 
+    // Used for losing aggro only 
+    bool playerOutOfSight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +64,13 @@ public class _Script_SightMonsterAI : MonoBehaviour
         {
             chasing = true;
             patrolling = false;
+        }
+
+        // If player starts to be out of sight while being chased, start the counter and lose aggro if player stays hidden for amount of time
+        if (chasing && !canSeePlayer && !playerOutOfSight)
+        {
+            playerOutOfSight = true;
+            StartCoroutine(WaitToLoseAggro());
         }
     }
 
@@ -116,5 +126,24 @@ public class _Script_SightMonsterAI : MonoBehaviour
         yield return new WaitForSeconds(duration);
         stunned = false;
         agent.isStopped = false;
+    }
+
+    public IEnumerator WaitToLoseAggro()
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            if (gameObject.GetComponent<_Script_FieldOfView>().canSeePlayer)
+            {
+                playerOutOfSight = false;
+                yield break;
+            }
+            yield return new WaitForSeconds(0.25f);
+        }
+        if (playerOutOfSight)
+        {
+            chasing = false;
+            patrolling = true;
+            playerOutOfSight = false;
+        }
     }
 }
