@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class _Script_SightMonsterAI : MonoBehaviour
 {
+    //private Animator animator;
 
     // Used for transforming (set human and monster models inside the editor)
     [SerializeField] private MeshFilter monsterMesh;
@@ -36,6 +37,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player");
         patrolling = true;
@@ -62,6 +64,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
         bool playerIsMoving = player.GetComponent<_Script_PlayerMovement>().isMoving;
         if (canSeePlayer && playerIsMoving) 
         {
+            //animator.SetBool("IsAggro", true);
             chasing = true;
             patrolling = false;
         }
@@ -141,6 +144,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
         }
         if (playerOutOfSight)
         {
+            //animator.SetBool("IsAggro", false);
             chasing = false;
             patrolling = true;
             playerOutOfSight = false;
