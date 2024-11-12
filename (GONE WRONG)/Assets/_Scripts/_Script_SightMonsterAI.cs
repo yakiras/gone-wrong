@@ -64,28 +64,30 @@ public class _Script_SightMonsterAI : MonoBehaviour
         bool playerIsMoving = player.GetComponent<_Script_PlayerMovement>().isMoving;
         if (canSeePlayer && playerIsMoving) 
         {
+            Debug.Log("--AGGRO--");
             //animator.SetBool("IsAggro", true);
             chasing = true;
             patrolling = false;
         }
 
-        // If player starts to be out of sight while being chased, start the counter and lose aggro if player stays hidden for amount of time
+        //If player starts to be out of sight while being chased, start the counter and lose aggro if player stays hidden for amount of time
         if (chasing && !canSeePlayer && !playerOutOfSight)
-        {
-            playerOutOfSight = true;
-            StartCoroutine(WaitToLoseAggro());
-        }
+            {
+                playerOutOfSight = true;
+                StartCoroutine(WaitToLoseAggro());
+            }
     }
 
     void Chase() 
     {
+        Debug.Log("CHASING");
         agent.speed = 12;
         agent.SetDestination(player.transform.position);
     }
 
     void Patrol() 
     {
-        agent.speed = 6;
+        agent.speed = 5;
         if (!walkpointSet) 
             SearchForDest();
         if (walkpointSet)
@@ -96,6 +98,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
 
     void SearchForDest() 
     {
+        Debug.Log("Destination set");
         float z = Random.Range(-range, range);
         float x = Random.Range(-range, range);
 

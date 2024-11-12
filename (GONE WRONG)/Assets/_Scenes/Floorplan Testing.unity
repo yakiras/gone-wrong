@@ -110958,6 +110958,10 @@ PrefabInstance:
       propertyPath: depleteInterval
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5626627145571431456, guid: 7f3f7e4e8f1243142b607fde44d49a4a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.047
+      objectReference: {fileID: 0}
     - target: {fileID: 8511053521571393127, guid: 7f3f7e4e8f1243142b607fde44d49a4a, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.75
@@ -110980,7 +110984,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8511053521571393127, guid: 7f3f7e4e8f1243142b607fde44d49a4a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.04
+      value: 13.72
       objectReference: {fileID: 0}
     - target: {fileID: 8511053521571393127, guid: 7f3f7e4e8f1243142b607fde44d49a4a, type: 3}
       propertyPath: m_LocalRotation.w
