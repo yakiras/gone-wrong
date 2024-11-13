@@ -40499,6 +40499,7 @@ MonoBehaviour:
   sightMonsterMesh: {fileID: 2756627725118907817, guid: cdf7b9a4f4df49f429f17cbf7f1ebdf8, type: 3}
   patrollingSpeed: 4
   chasingSpeed: 18
+  player: {fileID: 406036836}
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -40524,7 +40525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de9c0c59af4962245915dc0c02d26a0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 20
+  radius: 28
   angle: 311
   playerRef: {fileID: 406036836}
   targetMask:
@@ -43506,7 +43507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f3947aa77407e774d88f3f36192bc4e4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.59
+      value: 1.374
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f3947aa77407e774d88f3f36192bc4e4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -115167,6 +115168,14 @@ PrefabInstance:
     - target: {fileID: 2779792799589465501, guid: 7f3f7e4e8f1243142b607fde44d49a4a, type: 3}
       propertyPath: mouseSensitivity
       value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734240473073370471, guid: 7f3f7e4e8f1243142b607fde44d49a4a, type: 3}
+      propertyPath: walkSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734240473073370471, guid: 7f3f7e4e8f1243142b607fde44d49a4a, type: 3}
+      propertyPath: sprintSpeed
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3734240473073370471, guid: 7f3f7e4e8f1243142b607fde44d49a4a, type: 3}
       propertyPath: runClips.Array.size

@@ -16,7 +16,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
     public int patrollingSpeed;
     public int chasingSpeed;
 
-    GameObject player;
+    public GameObject player;
 
     NavMeshAgent agent;
 
@@ -41,7 +41,6 @@ public class _Script_SightMonsterAI : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        player = GameObject.Find("Player");
         patrolling = true;
         chasing = false;
         StartPatrolling();
@@ -57,9 +56,9 @@ public class _Script_SightMonsterAI : MonoBehaviour
         if (patrolling && Vector3.Distance(transform.position, currentDestination) < 1)
         {
             SetNextWaypoint();
-            GoToDestination();  
+            GoToDestination();
         }
-        
+
         if (chasing) Chase();
 
         bool canSeePlayer = gameObject.GetComponent<_Script_FieldOfView>().canSeePlayer && !_Script_PlayerBed.playerHiding;
@@ -103,10 +102,13 @@ public class _Script_SightMonsterAI : MonoBehaviour
 
     void Chase() 
     {
-        agent.isStopped = false;
-        Debug.Log("CHASING");
-        agent.speed = chasingSpeed;
-        agent.SetDestination(player.transform.position);
+        //agent.isStopped = false;
+        //agent.speed = chasingSpeed;
+        //agent.SetDestination(player.transform.position);
+        //Debug.Log("Destination:" + agent.destination);
+        //Debug.Log("Player location:" + player.transform.position);
+        transform.LookAt(player.transform);
+        transform.position += transform.forward * chasingSpeed * Time.deltaTime;
     }
 
     // Changes monster's mesh from monster to human form.
