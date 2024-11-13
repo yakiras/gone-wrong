@@ -85,6 +85,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
     {
         currentDestination = waypoints[waypointIndex].position;
         agent.SetDestination(currentDestination);
+        Debug.Log(agent.destination);
     }
 
     void SetNextWaypoint()
