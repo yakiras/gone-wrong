@@ -13,6 +13,9 @@ public class _Script_SightMonsterAI : MonoBehaviour
     [SerializeField] private Mesh humanMesh;
     [SerializeField] private Mesh sightMonsterMesh;
 
+    public int patrollingSpeed;
+    public int chasingSpeed;
+
     GameObject player;
 
     NavMeshAgent agent;
@@ -53,7 +56,6 @@ public class _Script_SightMonsterAI : MonoBehaviour
 
         if (patrolling && Vector3.Distance(transform.position, currentDestination) < 1)
         {
-            agent.speed = 6;
             SetNextWaypoint();
             GoToDestination();  
         }
@@ -62,12 +64,13 @@ public class _Script_SightMonsterAI : MonoBehaviour
 
         bool canSeePlayer = gameObject.GetComponent<_Script_FieldOfView>().canSeePlayer && !_Script_PlayerBed.playerHiding;
         bool playerIsMoving = player.GetComponent<_Script_PlayerMovement>().isMoving;
-        if (canSeePlayer && playerIsMoving) 
+        if (canSeePlayer && playerIsMoving && !chasing) 
         {
             Debug.Log("--AGGRO--");
             animator.SetBool("IsAggro", true);
             chasing = true;
             patrolling = false;
+            agent.isStopped = true;
         }
 
         //If player starts to be out of sight while being chased, start the counter and lose aggro if player stays hidden for amount of time
@@ -99,8 +102,9 @@ public class _Script_SightMonsterAI : MonoBehaviour
 
     void Chase() 
     {
+        agent.isStopped = false;
         Debug.Log("CHASING");
-        agent.speed = 12;
+        agent.speed = chasingSpeed;
         agent.SetDestination(player.transform.position);
     }
 
@@ -151,7 +155,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
 
     public void StartPatrolling()
     {
-        agent.speed = 6;
+        agent.speed = patrollingSpeed;
         patrolling = true;
         GoToDestination();
     }
