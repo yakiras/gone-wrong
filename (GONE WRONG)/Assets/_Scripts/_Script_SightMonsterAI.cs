@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class _Script_SightMonsterAI : MonoBehaviour
 {
-    //private Animator animator;
+    private Animator animator;
 
     // Used for transforming (set human and monster models inside the editor)
     [SerializeField] private MeshFilter monsterMesh;
@@ -19,13 +20,11 @@ public class _Script_SightMonsterAI : MonoBehaviour
     // Used for pathfinding, set inside editor
     [SerializeField] LayerMask groundLayer, playerLayer;
 
-    Vector3 destPoint;
-
-    // Does enemy already have a point it's walking to
-    bool walkpointSet;
-
-    // Range that a random destination point can be set in
-    [SerializeField] float range;
+    // Used for patrolling
+    public Transform[] waypoints;
+    int waypointIndex;
+    Vector3 currentDestination;
+    bool goingBackToStart;
 
     bool patrolling;
     bool chasing;
@@ -37,27 +36,28 @@ public class _Script_SightMonsterAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player");
         patrolling = true;
         chasing = false;
+        StartPatrolling();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Used to test stun
-        //if (Input.GetKeyDown(KeyCode.N))
-        //{
-        //    StartCoroutine(Stun(5));
-        //    Debug.Log("---STUNNED---");
-        //}
 
         if (stunned)
             return;
 
-        if (patrolling) Patrol();
+        if (patrolling && Vector3.Distance(transform.position, currentDestination) < 1)
+        {
+            agent.speed = 6;
+            SetNextWaypoint();
+            GoToDestination();  
+        }
+        
         if (chasing) Chase();
 
         bool canSeePlayer = gameObject.GetComponent<_Script_FieldOfView>().canSeePlayer && !_Script_PlayerBed.playerHiding;
@@ -65,7 +65,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
         if (canSeePlayer && playerIsMoving) 
         {
             Debug.Log("--AGGRO--");
-            //animator.SetBool("IsAggro", true);
+            animator.SetBool("IsAggro", true);
             chasing = true;
             patrolling = false;
         }
@@ -78,37 +78,30 @@ public class _Script_SightMonsterAI : MonoBehaviour
             }
     }
 
+    void GoToDestination()
+    {
+        currentDestination = waypoints[waypointIndex].position;
+        agent.SetDestination(currentDestination);
+    }
+
+    void SetNextWaypoint()
+    {
+        if (waypointIndex == waypoints.Length - 1)
+            goingBackToStart = true;
+        if (waypointIndex == 0)
+            goingBackToStart = false;
+
+        if (goingBackToStart)
+            waypointIndex--;
+        else
+            waypointIndex++;
+    }
+
     void Chase() 
     {
         Debug.Log("CHASING");
         agent.speed = 12;
         agent.SetDestination(player.transform.position);
-    }
-
-    void Patrol() 
-    {
-        agent.speed = 5;
-        if (!walkpointSet) 
-            SearchForDest();
-        if (walkpointSet)
-            agent.SetDestination(destPoint);
-        if (Vector3.Distance(transform.position, destPoint) < 10)
-            walkpointSet = false;
-    }
-
-    void SearchForDest() 
-    {
-        Debug.Log("Destination set");
-        float z = Random.Range(-range, range);
-        float x = Random.Range(-range, range);
-
-        destPoint = new Vector3(transform.position.x + x, transform.position.y, transform.position.z + z);
-
-        // Verify that random point is does not go outside of navMesh
-        if (Physics.Raycast(destPoint, Vector3.down, groundLayer))
-        {
-            walkpointSet=true;
-        }
     }
 
     // Changes monster's mesh from monster to human form.
@@ -127,11 +120,13 @@ public class _Script_SightMonsterAI : MonoBehaviour
     //To use this method, do "StartCoroutine(Stun(5));" (duration is in seconds)
     public IEnumerator Stun(float duration)
     {
+        animator.SetBool("IsRevealed", true);
         stunned = true;
         agent.isStopped = true;
         yield return new WaitForSeconds(duration);
         stunned = false;
         agent.isStopped = false;
+        animator.SetBool("IsRevealed", false);
     }
 
     public IEnumerator WaitToLoseAggro()
@@ -147,10 +142,17 @@ public class _Script_SightMonsterAI : MonoBehaviour
         }
         if (playerOutOfSight)
         {
-            //animator.SetBool("IsAggro", false);
+            animator.SetBool("IsAggro", false);
             chasing = false;
-            patrolling = true;
             playerOutOfSight = false;
+            StartPatrolling();
         }
+    }
+
+    public void StartPatrolling()
+    {
+        agent.speed = 6;
+        patrolling = true;
+        GoToDestination();
     }
 }
