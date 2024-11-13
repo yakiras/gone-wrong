@@ -68,7 +68,7 @@ public class _Script_CameraToggle : MonoBehaviour
                     if (hit.collider.gameObject == enemyGameObj)
                     {
                         Debug.Log("Enemy in sight");
-                        enemyGameObj.GetComponent<_Script_SightMonsterAI>().TransformToMonster();
+                        //enemyGameObj.GetComponent<_Script_SightMonsterAI>().TransformToMonster();
                         StartCoroutine(enemyGameObj.GetComponent<_Script_SightMonsterAI>().Stun(stunTime));
                     }
                 }
