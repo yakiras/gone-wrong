@@ -6,6 +6,7 @@ public class _Script_doorHinge : MonoBehaviour
 {
 
     public bool version1 = true;
+    public bool angleOveride = false;
 
     public bool isOpen = false;
     public float openChange;
@@ -17,6 +18,11 @@ public class _Script_doorHinge : MonoBehaviour
         {
             openChange = 90f;
             closeChange = 0f;
+        }
+        else if (angleOveride)
+        {
+            openChange = openChange;
+            closeChange = closeChange;
         }
         else
         {
