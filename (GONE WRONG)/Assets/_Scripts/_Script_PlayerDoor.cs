@@ -11,11 +11,10 @@ public class _Script_PlayerDoor : MonoBehaviour
 
     [SerializeField] private Transform playerCameraTrans;
     [SerializeField] private LayerMask doorLayerMask;
-    private Transform doorHinge;
+    private Transform hinge;
     private MeshCollider doorCollider;
     private Quaternion targetRotation;
     private bool isAnimating = false;
-    private bool isOpen = false;
 
     void Update()
     {
@@ -25,27 +24,29 @@ public class _Script_PlayerDoor : MonoBehaviour
             {
                 if (raycastHit.collider.TryGetComponent(out Component door) && door.gameObject.CompareTag("Door"))
                 {
-                    doorHinge = door.transform.parent;
+                    hinge = door.transform.parent;
+
                     doorCollider = door.GetComponent<MeshCollider>();
                     doorCollider.enabled = false;
 
-                    targetRotation = isOpen ? Quaternion.Euler(0, doorHinge.rotation.y, 0) : Quaternion.Euler(0, doorHinge.rotation.y, 0);
+                    bool opened = hinge.GetComponent<_Script_doorHinge>().isOpen;
+                    targetRotation = opened ? Quaternion.Euler(0, hinge.rotation.y, 0) : Quaternion.Euler(0, hinge.rotation.y + openAngle, 0);
 
                     isAnimating = true;
-                    isOpen = !isOpen;
+                    hinge.GetComponent<_Script_doorHinge>().isOpen = !opened;
                 }
             }
         }
 
         if (isAnimating)
         {
-            doorHinge.rotation = Quaternion.Slerp(doorHinge.rotation, targetRotation, Time.deltaTime * rotateSpeed);
-            Debug.Log(doorHinge.rotation.y);
+            hinge.rotation = Quaternion.Slerp(hinge.rotation, targetRotation, Time.deltaTime * rotateSpeed);
+            Debug.Log(hinge.rotation.y);
 
             // Stop animating if we've reached the target rotation
-            if (Quaternion.Angle(doorHinge.rotation, targetRotation) < 0.1f)
+            if (Quaternion.Angle(hinge.rotation, targetRotation) < 0.1f)
             {
-                doorHinge.rotation = targetRotation;
+                hinge.rotation = targetRotation;
                 doorCollider.enabled = true;
                 isAnimating = false;
             }
