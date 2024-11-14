@@ -34389,6 +34389,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -4958538023392519991, guid: 80485ae2a2d4ced4b85e2034eca62382, type: 3}
+      propertyPath: m_TagString
+      value: WinState
+      objectReference: {fileID: 0}
     - target: {fileID: -3995272465676935165, guid: 80485ae2a2d4ced4b85e2034eca62382, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -34408,6 +34412,22 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 80485ae2a2d4ced4b85e2034eca62382, type: 3}
       propertyPath: m_Name
       value: ballroom_door
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 80485ae2a2d4ced4b85e2034eca62382, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 80485ae2a2d4ced4b85e2034eca62382, type: 3}
+      propertyPath: m_TagString
+      value: WinState
+      objectReference: {fileID: 0}
+    - target: {fileID: 7620835090651094966, guid: 80485ae2a2d4ced4b85e2034eca62382, type: 3}
+      propertyPath: m_TagString
+      value: WinState
+      objectReference: {fileID: 0}
+    - target: {fileID: 8182320217418860803, guid: 80485ae2a2d4ced4b85e2034eca62382, type: 3}
+      propertyPath: m_TagString
+      value: WinState
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -77978,7 +77998,7 @@ GameObject:
   - component: {fileID: 1216444179}
   m_Layer: 0
   m_Name: ColliderHolder
-  m_TagString: Untagged
+  m_TagString: WinState
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86214,6 +86234,7 @@ GameObject:
   - component: {fileID: 1360825068}
   - component: {fileID: 1360825067}
   - component: {fileID: 1360825066}
+  - component: {fileID: 1360825072}
   m_Layer: 11
   m_Name: Key (Prop)
   m_TagString: Untagged
@@ -86353,6 +86374,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!114 &1360825072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360825065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a70fa7dbe1ea9aa42986cc3093934457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1361730434
 GameObject:
   m_ObjectHideFlags: 0

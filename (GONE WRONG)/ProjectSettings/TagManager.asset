@@ -9,6 +9,7 @@ TagManager:
   - Battery
   - Key
   - Door
+  - WinState
   layers:
   - Default
   - TransparentFX

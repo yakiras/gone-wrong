@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Floorplan Testing.unity
     guid: 563c364d8f0fbdd45870dd2fc9a9f5c9
+  - enabled: 1
+    path: Assets/_Scenes/WinState.unity
+    guid: da9266765e598c04e957b906b1269f1a
   m_configObjects: {}
