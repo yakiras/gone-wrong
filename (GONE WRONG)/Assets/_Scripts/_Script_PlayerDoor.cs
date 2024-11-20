@@ -29,11 +29,11 @@ public class _Script_PlayerDoor : MonoBehaviour
                     doorCollider = door.GetComponent<MeshCollider>();
                     doorCollider.enabled = false;
 
-                    _Script_doorHinge script = hinge.GetComponent<_Script_doorHinge>();
+                    /*_Script_doorHinge script = hinge.GetComponent<_Script_doorHinge>();
                     targetRotation = script.isOpen ? Quaternion.Euler(0, hinge.rotation.y + script.closeChange, 0) : Quaternion.Euler(0, hinge.rotation.y + script.openChange, 0);
 
                     isAnimating = true;
-                    hinge.GetComponent<_Script_doorHinge>().isOpen = !script.isOpen;
+                    hinge.GetComponent<_Script_doorHinge>().isOpen = !script.isOpen;*/
                 }
             }
         }
