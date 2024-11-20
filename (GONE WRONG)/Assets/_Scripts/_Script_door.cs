@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class _Script_doorHinge : MonoBehaviour
 {
-    public bool isOpen = false;
+    public bool version1 = true;
     public float rotateSpeed = 3f;
-    public float openAngle = 90f;
 
+    private float defaultAngle;
+    private bool isOpen = false;
     private Transform hinge;
     private bool isAnimating = false;
     private Quaternion targetRotation;
@@ -15,6 +16,10 @@ public class _Script_doorHinge : MonoBehaviour
     private void Start()
     {
         hinge = gameObject.transform;
+        if (version1)
+            defaultAngle = 0f;
+        else
+            defaultAngle = 180f;
     }
 
     void Update()
@@ -41,7 +46,7 @@ public class _Script_doorHinge : MonoBehaviour
 
         Debug.Log(hinge.parent.rotation.y);
 
-        targetRotation = isOpen ? Quaternion.Euler(0, hinge.parent.rotation.y, 0) : Quaternion.Euler(0, hinge.parent.rotation.y - openAngle, 0);
+        targetRotation = isOpen ? Quaternion.Euler(0, defaultAngle, 0) : Quaternion.Euler(0, defaultAngle - 90f, 0);
 
         isAnimating = true;
         isOpen = !isOpen;

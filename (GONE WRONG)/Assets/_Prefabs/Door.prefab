@@ -116,7 +116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6183068801471160192}
   - component: {fileID: 5851185695820204980}
-  - component: {fileID: 326173625174361441}
+  - component: {fileID: 9034374995606833386}
   m_Layer: 10
   m_Name: door_hinge
   m_TagString: Untagged
@@ -161,7 +161,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.01, y: 0.01, z: 0.01}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &326173625174361441
+--- !u!114 &9034374995606833386
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,10 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6685255a09ab06547a453f41045bed1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOpen: 0
+  version1: 1
   rotateSpeed: 3
-  openAngle: 90
-  hingeObj: {fileID: 955381108255992387}
 --- !u!1 &3646998929697734474
 GameObject:
   m_ObjectHideFlags: 0
