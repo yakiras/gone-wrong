@@ -6,6 +6,8 @@ public class _Script_PlayerMovement : MonoBehaviour
 {
     public float walkSpeed = 12f;
     public float sprintSpeed = 24f;
+    public float defaultFOV = 70f;
+    public float FOVchange = 10f;
     public float gravity = -9.81f;
     public CharacterController controller;
 
@@ -33,6 +35,7 @@ public class _Script_PlayerMovement : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        Camera.main.fieldOfView = defaultFOV;
     }
 
     void Update()
@@ -52,7 +55,7 @@ public class _Script_PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
         {
             currentSpeed = sprintSpeed;
-            if (Camera.main.fieldOfView < 100f)
+            if (Camera.main.fieldOfView < (defaultFOV + FOVchange))
                 Camera.main.fieldOfView += 0.2f;
 
             stepTimer -= Time.deltaTime;
@@ -65,7 +68,7 @@ public class _Script_PlayerMovement : MonoBehaviour
         else
         {
             currentSpeed = walkSpeed;
-            if (Camera.main.fieldOfView > 90f)
+            if (Camera.main.fieldOfView > defaultFOV)
                 Camera.main.fieldOfView -= 0.2f;
             if (Input.GetKey(KeyCode.W))
             {
