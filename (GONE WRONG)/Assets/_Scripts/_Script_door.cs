@@ -44,8 +44,6 @@ public class _Script_doorHinge : MonoBehaviour
         if (isAnimating)
             return;
 
-        Debug.Log(hinge.parent.rotation.y);
-
         targetRotation = isOpen ? Quaternion.Euler(0, defaultAngle, 0) : Quaternion.Euler(0, defaultAngle - 90f, 0);
 
         isAnimating = true;
