@@ -9,7 +9,10 @@ TagManager:
   - Battery
   - Key
   - Door
-  - WinState
+  - Security Key
+  - Ballroom Key
+  - Security Door
+  - Ballroom Door
   layers:
   - Default
   - TransparentFX

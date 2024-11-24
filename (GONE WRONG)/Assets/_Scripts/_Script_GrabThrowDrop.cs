@@ -37,11 +37,17 @@ public class GrabThrowDrop : MonoBehaviour
                         Destroy(obj);
                         Debug.Log("Got 1 battery!");
                     }
-                    else if (obj.CompareTag("Key"))
+                    else if (obj.CompareTag("Security Key"))
                     {
-                        // TO-DO: put key in inventory
+                        _Script_PlayerDoor.hasSecurityKey = true;
                         Destroy(obj);
-                        Debug.Log("Got key!");
+                        Debug.Log("Got security key!");
+                    }
+                    else if (obj.CompareTag("Ballroom Key"))
+                    {
+                        _Script_PlayerDoor.hasBallroomKey = true;
+                        Destroy(obj);
+                        Debug.Log("Got ballroom key!");
                     }
                 }
             }

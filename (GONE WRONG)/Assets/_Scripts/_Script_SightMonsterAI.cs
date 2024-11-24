@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,6 +16,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
 
     public int patrollingSpeed;
     public int chasingSpeed;
+    public int stunCoolDown;
 
     public GameObject player;
 
@@ -32,6 +34,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
     bool patrolling;
     bool chasing;
     bool stunned;
+    bool canStun;
 
     // Used for losing aggro only 
     bool playerOutOfSight;
@@ -43,6 +46,8 @@ public class _Script_SightMonsterAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         patrolling = true;
         chasing = false;
+        stunned = false;
+        canStun = true;
         StartPatrolling();
     }
 
@@ -127,6 +132,9 @@ public class _Script_SightMonsterAI : MonoBehaviour
     //To use this method, do "StartCoroutine(Stun(5));" (duration is in seconds)
     public IEnumerator Stun(float duration)
     {
+        if (!canStun)
+            yield break;
+
         animator.SetBool("IsRevealed", true);
         stunned = true;
         agent.isStopped = true;
@@ -134,6 +142,15 @@ public class _Script_SightMonsterAI : MonoBehaviour
         stunned = false;
         agent.isStopped = false;
         animator.SetBool("IsRevealed", false);
+
+        StartCoroutine(StunCD());
+    }
+
+    public IEnumerator StunCD()
+    {
+        canStun = false;
+        yield return new WaitForSeconds(stunCoolDown);
+        canStun = true;
     }
 
     public IEnumerator WaitToLoseAggro()

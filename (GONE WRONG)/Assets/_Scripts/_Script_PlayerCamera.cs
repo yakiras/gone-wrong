@@ -61,17 +61,17 @@ public class _Script_PlayerCamera : MonoBehaviour
     {
         switch (batteryLevel)
         {
-            case 4:
-                batteryOverlay.sprite = battery4;
-                break;
-            case 3:
-                batteryOverlay.sprite = battery3;
+            case 1:
+                batteryOverlay.sprite = battery1;
                 break;
             case 2:
                 batteryOverlay.sprite = battery2;
                 break;
-            case 1:
-                batteryOverlay.sprite = battery1;
+            case 3:
+                batteryOverlay.sprite = battery3;
+                break;
+            case 4:
+                batteryOverlay.sprite = battery4;
                 break;
         }
     }

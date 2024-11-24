@@ -58,6 +58,7 @@ public class _Script_CameraToggle : MonoBehaviour
 
         if (cameraOn)
         {
+            // TO-DO: enemiesParent should change based on what floor the player is on
             Transform[] enemyTransforms = enemiesParent.GetComponentsInChildren<Transform>();
             foreach (Transform enemy in enemyTransforms)
             {
@@ -67,8 +68,6 @@ public class _Script_CameraToggle : MonoBehaviour
                 {
                     if (hit.collider.gameObject == enemyGameObj)
                     {
-                        Debug.Log("Enemy in sight");
-                        //enemyGameObj.GetComponent<_Script_SightMonsterAI>().TransformToMonster();
                         StartCoroutine(enemyGameObj.GetComponent<_Script_SightMonsterAI>().Stun(stunTime));
                     }
                 }
