@@ -329,7 +329,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -984,7 +984,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5947899662692801131, guid: f9970522cf7851e4aae32928ae6204d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.0005012
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5947899662692801131, guid: f9970522cf7851e4aae32928ae6204d9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -992,7 +992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5947899662692801131, guid: f9970522cf7851e4aae32928ae6204d9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.730501
+      value: 17.59
       objectReference: {fileID: 0}
     - target: {fileID: 5947899662692801131, guid: f9970522cf7851e4aae32928ae6204d9, type: 3}
       propertyPath: m_LocalRotation.w
