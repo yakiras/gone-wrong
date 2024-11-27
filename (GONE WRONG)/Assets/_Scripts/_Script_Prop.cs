@@ -39,6 +39,8 @@ public class Prop : MonoBehaviour
         isGrabbed = true;
         propGrabPointTransform = grabPointTransform;
         propRB.useGravity = false;
+        propRB.isKinematic = true;
+        propRB.drag = 5f;
     }
 
     public void drop()
@@ -47,6 +49,7 @@ public class Prop : MonoBehaviour
         propGrabPointTransform = null;
         propRB.useGravity = true;
         propRB.isKinematic = false;
+        propRB.drag = 0f;
     }
 
     public void throwProp(Transform playerCameraTrans)
