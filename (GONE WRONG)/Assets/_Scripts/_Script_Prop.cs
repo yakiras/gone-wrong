@@ -64,4 +64,12 @@ public class Prop : MonoBehaviour
             //propRB.velocity = Vector3.zero;
         }
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (LayerMask.LayerToName(collision.gameObject.layer).Equals("Obstructions"))
+        {
+            Debug.Log("A prop has hit the wall!");
+        }
+    }
 }
