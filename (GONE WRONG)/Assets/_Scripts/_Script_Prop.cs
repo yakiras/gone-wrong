@@ -72,10 +72,9 @@ public class Prop : MonoBehaviour
     {
         if (LayerMask.LayerToName(collision.gameObject.layer).Equals("Obstructions"))
         {
-            float soundRange = 100f;
+            float soundRange = 70f;
             var sound = new Sound(transform.position, soundRange);
             Sounds.MakeSound(sound);
-            print($"Sound: with pos {sound.position} and range {soundRange}created");
         }
     }
 }

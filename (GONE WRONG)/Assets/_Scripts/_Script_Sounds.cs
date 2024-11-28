@@ -6,6 +6,7 @@ public static class Sounds
 {
     public static void MakeSound(Sound sound) 
     {
+        Debug.Log($"Sound: with pos {sound.position} and range {sound.range} created");
         Collider[] col = Physics.OverlapSphere(sound.position, sound.range);
 
         for (int i = 0; i < col.Length; i++)

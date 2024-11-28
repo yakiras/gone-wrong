@@ -24,6 +24,7 @@ public class _Script_SoundMonsterAI : MonoBehaviour
     int waypointIndex;
     Vector3 currentDestination;
     bool goingBackToStart;
+    Vector3 soundDestination;
 
     bool patrolling;
     bool stunned;
@@ -36,10 +37,10 @@ public class _Script_SoundMonsterAI : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        patrolling = false; // CHANGE THIS!!!!!!!!!!!!!!!!
+        patrolling = true;
         stunned = false;
         canStun = true;
-        //StartPatrolling();
+        StartPatrolling();
     }
 
     // Update is called once per frame
@@ -53,12 +54,18 @@ public class _Script_SoundMonsterAI : MonoBehaviour
             SetNextWaypoint();
             GoToDestination();
         }
+
+        if (Vector3.Distance(transform.position, soundDestination) < 1) 
+        {
+            GoToDestination();
+        }
     }
     public void ReactToSound(Sound sound)
     {
         agent.speed = chasingSpeed;
         print($"moving towards sound at {sound.position}");
         agent.SetDestination(sound.position);
+        soundDestination = sound.position;
     }
 
     void GoToDestination()
