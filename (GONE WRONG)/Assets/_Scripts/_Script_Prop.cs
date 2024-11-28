@@ -72,7 +72,10 @@ public class Prop : MonoBehaviour
     {
         if (LayerMask.LayerToName(collision.gameObject.layer).Equals("Obstructions"))
         {
-            Debug.Log("A prop has hit the wall!");
+            float soundRange = 100f;
+            var sound = new Sound(transform.position, soundRange);
+            Sounds.MakeSound(sound);
+            print($"Sound: with pos {sound.position} and range {soundRange}created");
         }
     }
 }

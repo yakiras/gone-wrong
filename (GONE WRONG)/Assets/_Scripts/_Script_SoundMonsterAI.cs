@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.PlayerSettings;
 
 public class _Script_SoundMonsterAI : MonoBehaviour
 {
@@ -25,35 +26,25 @@ public class _Script_SoundMonsterAI : MonoBehaviour
     bool goingBackToStart;
 
     bool patrolling;
-    bool chasing;
     bool stunned;
     bool canStun;
 
-    // Used for losing aggro only 
-    bool playerOutOfSight;
-
-    public void ReactToSound(Sound sound) 
-    {
-        print("reacting to sound");
-    }
-
+ 
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        patrolling = true;
-        chasing = false;
+        patrolling = false; // CHANGE THIS!!!!!!!!!!!!!!!!
         stunned = false;
         canStun = true;
-        StartPatrolling();
+        //StartPatrolling();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (stunned)
             return;
 
@@ -63,12 +54,17 @@ public class _Script_SoundMonsterAI : MonoBehaviour
             GoToDestination();
         }
     }
+    public void ReactToSound(Sound sound)
+    {
+        agent.speed = chasingSpeed;
+        print($"moving towards sound at {sound.position}");
+        agent.SetDestination(sound.position);
+    }
 
     void GoToDestination()
     {
         currentDestination = waypoints[waypointIndex].position;
         agent.SetDestination(currentDestination);
-        Debug.Log(agent.destination);
     }
 
     void SetNextWaypoint()

@@ -70,7 +70,6 @@ public class _Script_SightMonsterAI : MonoBehaviour
         bool playerIsMoving = player.GetComponent<_Script_PlayerMovement>().isMoving;
         if (canSeePlayer && playerIsMoving && !chasing) 
         {
-            Debug.Log("--AGGRO--");
             animator.SetBool("IsAggro", true);
             chasing = true;
             patrolling = false;
@@ -89,7 +88,6 @@ public class _Script_SightMonsterAI : MonoBehaviour
     {
         currentDestination = waypoints[waypointIndex].position;
         agent.SetDestination(currentDestination);
-        Debug.Log(agent.destination);
     }
 
     void SetNextWaypoint()

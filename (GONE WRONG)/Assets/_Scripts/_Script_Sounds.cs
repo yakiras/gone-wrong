@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sounds : MonoBehaviour
+public static class Sounds
 {
     public static void MakeSound(Sound sound) 
     {
@@ -10,6 +10,9 @@ public class Sounds : MonoBehaviour
 
         for (int i = 0; i < col.Length; i++)
             if (col[i].TryGetComponent(out _Script_SoundMonsterAI monster))
-                monster.ReactToSound(sound); 
+            {
+                Debug.Log("Monster heard sound");
+                monster.ReactToSound(sound);
+            }
     }
 }
