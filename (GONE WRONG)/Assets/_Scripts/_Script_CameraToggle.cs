@@ -15,10 +15,12 @@ public class _Script_CameraToggle : MonoBehaviour
 
     private bool cameraOn;
     private int batteryLevel;
+    public bool canUseCamera;
 
     // Start is called before the first frame update
     void Start()
     {
+        canUseCamera = true;
         cameraOn = false;
         batteryLevel = 100;
         batteriesLeft = 1;
@@ -28,7 +30,7 @@ public class _Script_CameraToggle : MonoBehaviour
     void Update()
     {
         // Toggle camera on/off
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (canUseCamera && Input.GetKeyDown(KeyCode.Space))
         {
             if (!cameraOn && batteryLevel > 0)
             {
@@ -46,7 +48,7 @@ public class _Script_CameraToggle : MonoBehaviour
         }
 
         // Replace battery
-        if (Input.GetKeyDown(KeyCode.R))
+        if (canUseCamera && Input.GetKeyDown(KeyCode.R))
         {
             if (batteriesLeft > 0)
             {

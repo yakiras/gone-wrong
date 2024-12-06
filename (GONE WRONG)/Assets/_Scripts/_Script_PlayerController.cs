@@ -7,8 +7,9 @@ public class _Script_PlayerController : MonoBehaviour
 {
     public Vector3 spawnPoint;
     public _Script_GameOverScreen gameOverScreen;
+    private bool paused;
 
-    private void Start()
+    void Start()
     {
         float x = PlayerPrefs.GetFloat("checkpointX", 0);
         float y = PlayerPrefs.GetFloat("checkpointY", 0);
@@ -20,6 +21,24 @@ public class _Script_PlayerController : MonoBehaviour
         Debug.Log("setting start position to " + startingPosition);
         
     }
+
+    void Update()
+    {
+        if (!paused && Input.GetKey(KeyCode.Escape))
+        {
+            GetComponent<_Script_CameraToggle>().canUseCamera = false;
+            Time.timeScale = 0;
+            paused = true;
+        }
+        else if (paused && Input.GetKey(KeyCode.Escape))
+        {
+            GetComponent<_Script_CameraToggle>().canUseCamera = true;
+            Time.timeScale = 1;
+            paused = false;
+        }
+    }
+
+
     private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Enemy")
