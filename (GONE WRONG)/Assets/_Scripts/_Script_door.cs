@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class _Script_doorHinge : MonoBehaviour
@@ -27,7 +25,7 @@ public class _Script_doorHinge : MonoBehaviour
         if (isAnimating)
         {
             hinge.rotation = Quaternion.Lerp(hinge.rotation, targetRotation, Time.deltaTime * rotateSpeed);
-            Debug.Log(hinge.rotation.y);
+            //Debug.Log(hinge.rotation.y);
 
             // Stop animating if we've reached the target rotation
             if (Quaternion.Angle(hinge.rotation, targetRotation) < 0.1f)

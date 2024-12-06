@@ -76,7 +76,7 @@ public class _Script_PlayerMovement : MonoBehaviour
                 if (stepTimer <= 0f)
                 {
                     var sound = new Sound(transform.position, 30f);
-                    Sounds.MakeSound(sound);
+                    //Sounds.MakeSound(sound);
                     PlayWalkSound();
                     stepTimer = walkInterval;
                 }

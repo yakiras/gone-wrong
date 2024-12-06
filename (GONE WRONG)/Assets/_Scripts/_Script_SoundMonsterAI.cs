@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEditor.PlayerSettings;
 
 public class _Script_SoundMonsterAI : MonoBehaviour
 {
@@ -55,13 +54,14 @@ public class _Script_SoundMonsterAI : MonoBehaviour
             GoToDestination();
         }
 
-        if (Vector3.Distance(transform.position, soundDestination) < 1) 
+        if (!patrolling && Vector3.Distance(transform.position, soundDestination) < 1) 
         {
-            GoToDestination();
+            StartPatrolling();
         }
     }
     public void ReactToSound(Sound sound)
     {
+        patrolling = false;
         agent.speed = chasingSpeed;
         print($"moving towards sound at {sound.position}");
         agent.SetDestination(sound.position);

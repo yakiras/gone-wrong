@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 
 public class _Script_GameOverScreen : MonoBehaviour
 {
+    public GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("Player");
         gameObject.SetActive(false);
     }
 
@@ -21,14 +25,17 @@ public class _Script_GameOverScreen : MonoBehaviour
 
     public void Retry()
     {
-        Time.timeScale = 1;
+        SceneManager.UnloadSceneAsync("Floorplan Testing");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Cursor.visible = false;
-
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1;
     }
 
     public void QuitGame()
     {
+        SceneManager.UnloadSceneAsync("Floorplan Testing");
+        Time.timeScale = 1;
         SceneManager.LoadScene("Main Menu");
     }
 }
