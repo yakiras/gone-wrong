@@ -5,6 +5,7 @@ using UnityEngine;
 public class GrabThrowDrop : MonoBehaviour
 {
     public float maxReach = 5f;
+    public GameObject uiPrompts;
 
     [SerializeField] private Transform playerCameraTrans;
     [SerializeField] private Transform propGrabPointTrans;
@@ -13,9 +14,11 @@ public class GrabThrowDrop : MonoBehaviour
     void Update()
     {
         // Grab/Drop (E)
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Physics.Raycast(playerCameraTrans.position, playerCameraTrans.forward, out RaycastHit raycastHit, maxReach, pickUpLayerMask))
         {
-            if (Physics.Raycast(playerCameraTrans.position, playerCameraTrans.forward, out RaycastHit raycastHit, maxReach, pickUpLayerMask))
+            uiPrompts.GetComponent<UIPrompts>().PromptE();
+
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 if (raycastHit.collider.TryGetComponent(out Prop grabbedProp))
                 {
@@ -51,14 +54,14 @@ public class GrabThrowDrop : MonoBehaviour
                     }
                 }
             }
-        }
+        } else { uiPrompts.GetComponent<UIPrompts>().PromptClear(); }
 
         // Throw (LMB)
         if (Input.GetMouseButtonDown(0))
         {
-            if (Physics.Raycast(playerCameraTrans.position, playerCameraTrans.forward, out RaycastHit raycastHit, maxReach, pickUpLayerMask))
+            if (Physics.Raycast(playerCameraTrans.position, playerCameraTrans.forward, out RaycastHit raycastHitThrow, maxReach, pickUpLayerMask))
             {
-                if (raycastHit.collider.TryGetComponent(out Prop grabbedProp))
+                if (raycastHitThrow.collider.TryGetComponent(out Prop grabbedProp))
                 {
                     if (grabbedProp.isGrabbed)
                     {
