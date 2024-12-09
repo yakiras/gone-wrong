@@ -11,8 +11,13 @@ public class _Script_CameraToggle : MonoBehaviour
     public int depleteAmount = 5;
 
     public GameObject enemiesParent;
+    public GameObject uiPrompts;
     public _Script_PlayerCamera cameraClass;
 
+    public AudioClip sfxCameraOn;
+    public AudioClip sfxCameraOff;
+
+    private AudioSource audioSource;
     private bool cameraOn;
     private int batteryLevel;
     public bool canUseCamera;
@@ -20,6 +25,7 @@ public class _Script_CameraToggle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         canUseCamera = true;
         cameraOn = false;
         batteryLevel = 100;
@@ -34,14 +40,14 @@ public class _Script_CameraToggle : MonoBehaviour
         {
             if (!cameraOn && batteryLevel > 0)
             {
-                Debug.Log("Camera Toggle: On");
+                audioSource.PlayOneShot(sfxCameraOn);
                 cameraOn = true;
                 cameraClass.TurnOnCamera();
                 StartCoroutine(DepleteBattery());
             }
             else
             {
-                Debug.Log("Camera Toggle: Off");
+                audioSource.PlayOneShot(sfxCameraOff);
                 cameraOn = false;
                 cameraClass.TurnOffCamera();
             }
@@ -52,7 +58,9 @@ public class _Script_CameraToggle : MonoBehaviour
         {
             if (batteriesLeft > 0)
             {
+                audioSource.PlayOneShot(sfxCameraOn);
                 batteryLevel = 100;
+                cameraClass.UpdateBatteryLvl(4);
                 batteriesLeft--;
             }
             Debug.Log($"Remaining Batteries: {batteriesLeft}");
@@ -60,7 +68,6 @@ public class _Script_CameraToggle : MonoBehaviour
 
         if (cameraOn)
         {
-            // TO-DO: enemiesParent should change based on what floor the player is on
             Transform[] enemyTransforms = enemiesParent.GetComponentsInChildren<Transform>();
             foreach (Transform enemy in enemyTransforms)
             {
@@ -88,7 +95,10 @@ public class _Script_CameraToggle : MonoBehaviour
             Debug.Log("Battery Level: " + batteryLevel + "%");
 
             if (batteryLevel <= 25)
+            {
+                StartCoroutine(uiPrompts.GetComponent<UIPrompts>().PromptR());
                 cameraClass.UpdateBatteryLvl(1);
+            }
             else if (batteryLevel <= 50)
                 cameraClass.UpdateBatteryLvl(2);
             else if (batteryLevel <= 75)
@@ -98,7 +108,7 @@ public class _Script_CameraToggle : MonoBehaviour
 
             if (batteryLevel <= 0)
             {
-                Debug.Log("Out of battery!");
+                audioSource.PlayOneShot(sfxCameraOff);
                 cameraOn = false;
                 cameraClass.TurnOffCamera();
             }

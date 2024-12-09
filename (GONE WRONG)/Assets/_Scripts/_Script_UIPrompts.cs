@@ -7,6 +7,11 @@ using UnityEngine.UI;
 public class UIPrompts : MonoBehaviour
 {
     public GameObject journalEntryObj;
+    public AudioClip sfxPenScribble;
+    public AudioClip sfxOpenBook;
+    public AudioClip sfxCloseBook;
+
+    private AudioSource audioSource;
     private TextMeshProUGUI currentEntryText;
     private int currentEntryNum = 0;
     private bool journalOpen;
@@ -32,6 +37,8 @@ public class UIPrompts : MonoBehaviour
 
     void Start()
     {
+        audioSource = transform.parent.parent.GetComponent<AudioSource>();
+
         uiOverlay = GetComponent<Image>();
         uiOverlay.enabled = false;
         currentEntryText = journalEntryObj.GetComponent<TextMeshProUGUI>();
@@ -47,6 +54,8 @@ public class UIPrompts : MonoBehaviour
         {
             if (!journalOpen)
             {
+                audioSource.PlayOneShot(sfxOpenBook);
+
                 uiOverlay.enabled = true;
                 uiOverlay.sprite = journalOverlay;
                 currentEntryText.enabled = true;
@@ -54,6 +63,8 @@ public class UIPrompts : MonoBehaviour
             }
             else
             {
+                audioSource.PlayOneShot(sfxCloseBook);
+
                 uiOverlay.enabled = false;
                 currentEntryText.enabled = false;
             }
@@ -68,7 +79,7 @@ public class UIPrompts : MonoBehaviour
         yield return new WaitForSeconds(3);
         uiOverlay.sprite = promptJournal;
         uiOverlay.enabled = true;
-        // TO-DO: pen scribble audio
+        audioSource.PlayOneShot(sfxPenScribble);
 
         // WASD PROMPT //
         yield return new WaitUntil(() => (journalOpen));
@@ -91,21 +102,30 @@ public class UIPrompts : MonoBehaviour
         journalDisabled = false;
     }
 
-    public void PromptR()
+    public IEnumerator PromptR()
     {
         uiOverlay.sprite = promptR;
+        uiOverlay.enabled = true;
+        yield return new WaitUntil(() => (Input.GetKeyDown(KeyCode.R) || Time.time > 5));
+        uiOverlay.enabled = false;
     }
     
     public void PromptE()
     {
         uiOverlay.sprite = promptE;
+        uiOverlay.enabled = true;
     }
 
     public void PromptJournal()
     {
         currentEntryNum++;
         uiOverlay.sprite = promptJournal;
-        // pen scribble audio
+        audioSource.PlayOneShot(sfxPenScribble);
+        uiOverlay.enabled = true;
     }
 
+    public void PromptClear()
+    {
+        uiOverlay.enabled = false;
+    }
 }
