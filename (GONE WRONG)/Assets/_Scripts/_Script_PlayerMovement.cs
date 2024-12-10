@@ -7,7 +7,7 @@ public class _Script_PlayerMovement : MonoBehaviour
     public float walkSpeed = 12f;
     public float sprintSpeed = 24f;
     public float defaultFOV = 70f;
-    public float FOVchange = 10f;
+    public float fovChange = 10f;
     public float gravity = -9.81f;
     public CharacterController controller;
 
@@ -55,7 +55,7 @@ public class _Script_PlayerMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
         {
             currentSpeed = sprintSpeed;
-            if (Camera.main.fieldOfView < (defaultFOV + FOVchange))
+            if (Camera.main.fieldOfView < (defaultFOV + fovChange))
                 Camera.main.fieldOfView += 0.2f;
 
             stepTimer -= Time.deltaTime;
