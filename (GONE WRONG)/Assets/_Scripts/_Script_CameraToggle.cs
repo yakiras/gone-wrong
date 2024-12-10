@@ -77,7 +77,16 @@ public class _Script_CameraToggle : MonoBehaviour
                 {
                     if (hit.collider.gameObject == enemyGameObj)
                     {
-                        StartCoroutine(enemyGameObj.GetComponent<_Script_SightMonsterAI>().Stun(stunTime));
+                        if (enemyGameObj.TryGetComponent(out _Script_SightMonsterAI sightScript))
+                        {
+                            //sightScript.PlayAggro();
+                            StartCoroutine(sightScript.Stun(stunTime));
+                        }
+                        else if (enemyGameObj.TryGetComponent(out _Script_SoundMonsterAI soundScript))
+                        {
+                            //soundScript.PlayAggro();
+                            StartCoroutine(soundScript.Stun(stunTime));
+                        }
                     }
                 }
             }

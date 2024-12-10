@@ -20,6 +20,13 @@ public class _Script_SightMonsterAI : MonoBehaviour
 
     public GameObject player;
 
+    public AudioClip[] click;
+    public AudioClip aggro;
+    public AudioClip deaggro;
+    public float clickInterval = 5f;
+    private float stepTimer;
+    private AudioSource audioSource;
+
     NavMeshAgent agent;
 
     // Used for pathfinding, set inside editor
@@ -44,6 +51,9 @@ public class _Script_SightMonsterAI : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
+        stepTimer = clickInterval;
+
         patrolling = true;
         chasing = false;
         stunned = false;
@@ -58,6 +68,16 @@ public class _Script_SightMonsterAI : MonoBehaviour
         if (stunned)
             return;
 
+        if (patrolling)
+        {
+            stepTimer -= Time.deltaTime;
+            if (stepTimer <= 0f)
+            {
+                PlayClick();
+                stepTimer = clickInterval;
+            }
+        }
+
         if (patrolling && Vector3.Distance(transform.position, currentDestination) < 1)
         {
             SetNextWaypoint();
@@ -70,6 +90,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
         bool playerIsMoving = player.GetComponent<_Script_PlayerMovement>().isMoving;
         if (canSeePlayer && playerIsMoving && !chasing) 
         {
+            audioSource.PlayOneShot(aggro);
             animator.SetBool("IsAggro", true);
             chasing = true;
             patrolling = false;
@@ -114,27 +135,16 @@ public class _Script_SightMonsterAI : MonoBehaviour
         transform.position += transform.forward * chasingSpeed * Time.deltaTime;
     }
 
-    // Changes monster's mesh from monster to human form.
-    public void TransformToHuman()
-    {
-        monsterMesh.mesh = humanMesh;
-    }
-
-    // Changes monster's mesh from human to monster form.
-    public void TransformToMonster()
-    {
-        monsterMesh.mesh = sightMonsterMesh;
-    }
-
-
     //To use this method, do "StartCoroutine(Stun(5));" (duration is in seconds)
     public IEnumerator Stun(float duration)
     {
         if (!canStun)
             yield break;
 
+        audioSource.PlayOneShot(deaggro);
         animator.SetBool("IsRevealed", true);
         stunned = true;
+        canStun = false;
         agent.isStopped = true;
         yield return new WaitForSeconds(duration);
         stunned = false;
@@ -146,7 +156,6 @@ public class _Script_SightMonsterAI : MonoBehaviour
 
     public IEnumerator StunCD()
     {
-        canStun = false;
         yield return new WaitForSeconds(stunCoolDown);
         canStun = true;
     }
@@ -168,6 +177,7 @@ public class _Script_SightMonsterAI : MonoBehaviour
             chasing = false;
             playerOutOfSight = false;
             StartPatrolling();
+            audioSource.PlayOneShot(deaggro);
         }
     }
 
@@ -176,5 +186,20 @@ public class _Script_SightMonsterAI : MonoBehaviour
         agent.speed = patrollingSpeed;
         patrolling = true;
         GoToDestination();
+    }
+
+    public void PlayAggro()
+    {
+        audioSource.PlayOneShot(aggro);
+    }
+
+    private void PlayClick()
+    {
+        if (click.Length > 0)
+        {
+            // Choose a random click clip to play
+            AudioClip clip = click[Random.Range(0, click.Length)];
+            audioSource.PlayOneShot(clip);
+        }
     }
 }

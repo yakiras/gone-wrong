@@ -70,13 +70,11 @@ public class _Script_PlayerMovement : MonoBehaviour
             currentSpeed = walkSpeed;
             if (Camera.main.fieldOfView > defaultFOV)
                 Camera.main.fieldOfView -= 0.2f;
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
             {
                 stepTimer -= Time.deltaTime;
                 if (stepTimer <= 0f)
                 {
-                    var sound = new Sound(transform.position, 30f);
-                    //Sounds.MakeSound(sound);
                     PlayWalkSound();
                     stepTimer = walkInterval;
                 }

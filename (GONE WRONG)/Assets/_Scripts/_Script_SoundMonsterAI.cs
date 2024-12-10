@@ -15,6 +15,13 @@ public class _Script_SoundMonsterAI : MonoBehaviour
 
     NavMeshAgent agent;
 
+    public AudioClip[] click;
+    public AudioClip aggro;
+    public AudioClip deaggro;
+    public float clickInterval = 5f;
+    private float stepTimer;
+    private AudioSource audioSource;
+
     // Used for pathfinding, set inside editor
     [SerializeField] LayerMask groundLayer, playerLayer;
 
@@ -29,13 +36,15 @@ public class _Script_SoundMonsterAI : MonoBehaviour
     bool stunned;
     bool canStun;
 
- 
 
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
+        stepTimer = clickInterval;
+
         patrolling = true;
         stunned = false;
         canStun = true;
@@ -45,8 +54,17 @@ public class _Script_SoundMonsterAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (stunned)
-            return;
+        if (stunned) return;
+
+        if (patrolling)
+        {
+            stepTimer -= Time.deltaTime;
+            if (stepTimer <= 0f)
+            {
+                PlayClick();
+                stepTimer = clickInterval;
+            }
+        }
 
         if (patrolling && Vector3.Distance(transform.position, currentDestination) < 1)
         {
@@ -59,8 +77,10 @@ public class _Script_SoundMonsterAI : MonoBehaviour
             StartPatrolling();
         }
     }
+
     public void ReactToSound(Sound sound)
     {
+        audioSource.PlayOneShot(aggro);
         patrolling = false;
         agent.speed = chasingSpeed;
         print($"moving towards sound at {sound.position}");
@@ -93,8 +113,10 @@ public class _Script_SoundMonsterAI : MonoBehaviour
         if (!canStun)
             yield break;
 
+        audioSource.PlayOneShot(deaggro);
         animator.SetBool("IsRevealed", true);
         stunned = true;
+        canStun = false;
         agent.isStopped = true;
         yield return new WaitForSeconds(duration);
         stunned = false;
@@ -106,7 +128,6 @@ public class _Script_SoundMonsterAI : MonoBehaviour
 
     public IEnumerator StunCD()
     {
-        canStun = false;
         yield return new WaitForSeconds(stunCoolDown);
         canStun = true;
     }
@@ -116,5 +137,20 @@ public class _Script_SoundMonsterAI : MonoBehaviour
         agent.speed = patrollingSpeed;
         patrolling = true;
         GoToDestination();
+    }
+
+    public void PlayAggro()
+    {
+        audioSource.PlayOneShot(aggro);
+    }
+
+    private void PlayClick()
+    {
+        if (click.Length > 0)
+        {
+            // Choose a random click clip to play
+            AudioClip clip = click[Random.Range(0, click.Length)];
+            audioSource.PlayOneShot(clip);
+        }
     }
 }
