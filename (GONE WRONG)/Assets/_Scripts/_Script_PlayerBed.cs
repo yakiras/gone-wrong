@@ -6,8 +6,7 @@ public class _Script_PlayerBed : MonoBehaviour
 {
     public static bool playerHiding = false;
 
-    public Collider bedCollider; // Collider of the bed's hiding zone
-
+    private Collider bedCollider; // Collider of the bed's hiding zone
     private bool canHide = false; // Check if player in collider
     private Vector3 lastPos;
 
@@ -18,14 +17,18 @@ public class _Script_PlayerBed : MonoBehaviour
             if (!playerHiding)
                 EnterHiding();
             else
-                ExitHiding();
+                StartCoroutine(ExitHiding());
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("HideZone"))
+        {
+            bedCollider = other;
             canHide = true;
+            lastPos = transform.position;
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -38,17 +41,17 @@ public class _Script_PlayerBed : MonoBehaviour
     {
         playerHiding = true;
         _Script_PlayerMovement.movementDisabled = true;
-        lastPos = transform.position;
-        transform.position = new Vector3(bedCollider.transform.parent.position.x, transform.position.y - 3.2f, bedCollider.transform.parent.position.z);
+        transform.position = new Vector3(bedCollider.transform.position.x, transform.position.y - 2.3f, bedCollider.transform.position.z);
         Debug.Log(transform.position);
         Debug.Log("BED");
     }
 
-    void ExitHiding()
+    IEnumerator ExitHiding()
     {
+        transform.position = lastPos;
+        yield return new WaitUntil(() => transform.position == lastPos);
         playerHiding = false;
         _Script_PlayerMovement.movementDisabled = false;
-        transform.position = lastPos;
         Debug.Log("NO BED");
     }
 }
