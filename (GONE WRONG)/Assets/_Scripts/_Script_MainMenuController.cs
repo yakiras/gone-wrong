@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class _Script_MainMenuController : MonoBehaviour
 {
-
     public void PlayGame()
     {
         SceneManager.LoadScene("Floorplan Testing");
@@ -14,5 +13,10 @@ public class _Script_MainMenuController : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void TitleScreen()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 }
