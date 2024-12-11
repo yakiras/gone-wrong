@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIPrompts : MonoBehaviour
 {
+    public float tutorialLength = 4f;
+    public bool tutorialPlaying;
     public GameObject journalEntryObj;
     public GameObject textPromptObj;
     public AudioClip sfxPenScribble;
@@ -50,6 +52,7 @@ public class UIPrompts : MonoBehaviour
         journalOpen = false;
 
         StartCoroutine(StartTutorial());
+        tutorialPlaying = true;
     }
 
     private void Update()
@@ -93,17 +96,19 @@ public class UIPrompts : MonoBehaviour
         uiOverlay.sprite = promptWASD;
 
         // SHIFT PROMPT //
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(tutorialLength);
         uiOverlay.sprite = promptShift;
 
         // SPACE PROMPT //
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(tutorialLength);
         uiOverlay.sprite = promptSpace;
 
         // FINISH TUTORIAL //
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(tutorialLength);
         uiOverlay.enabled = false;
         journalDisabled = false;
+
+        tutorialPlaying = false;
     }
 
     public IEnumerator PromptR()
@@ -137,7 +142,7 @@ public class UIPrompts : MonoBehaviour
     {
         textPrompt.enabled = true;
         textPrompt.text = prompt;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3);
         textPrompt.enabled = false;
     }
 }

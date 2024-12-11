@@ -10,9 +10,10 @@ public class _Script_CameraToggle : MonoBehaviour
     public float depleteInterval = 0.5f;
     public int depleteAmount = 5;
 
+    public _Script_PlayerCamera cameraClass;
     public GameObject enemiesParent;
     public GameObject uiPrompts;
-    public _Script_PlayerCamera cameraClass;
+    private UIPrompts uiScript;
 
     public AudioClip sfxCameraOn;
     public AudioClip sfxCameraOff;
@@ -26,6 +27,7 @@ public class _Script_CameraToggle : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        uiScript = uiPrompts.GetComponent<UIPrompts>();
         canUseCamera = true;
         cameraOn = false;
         batteryLevel = 100;
@@ -62,8 +64,9 @@ public class _Script_CameraToggle : MonoBehaviour
                 batteryLevel = 100;
                 cameraClass.UpdateBatteryLvl(4);
                 batteriesLeft--;
+                StartCoroutine(uiScript.DisplayText($"Batteries Left: {batteriesLeft}"));
             }
-            Debug.Log($"Remaining Batteries: {batteriesLeft}");
+            else StartCoroutine(uiScript.DisplayText("No batteries left"));
         }
 
         if (cameraOn)

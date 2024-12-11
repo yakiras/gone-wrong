@@ -6,6 +6,7 @@ public class GrabThrowDrop : MonoBehaviour
 {
     public float maxReach = 5f;
     public GameObject uiPrompts;
+    private UIPrompts uiScript;
 
     [SerializeField] private Transform playerCameraTrans;
     [SerializeField] private Transform propGrabPointTrans;
@@ -18,6 +19,7 @@ public class GrabThrowDrop : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        uiScript = uiPrompts.GetComponent<UIPrompts>();
         isHolding = false;
     }
 
@@ -26,8 +28,13 @@ public class GrabThrowDrop : MonoBehaviour
         // Grab/Drop (E)
         if (Physics.Raycast(playerCameraTrans.position, playerCameraTrans.forward, out RaycastHit raycastHit, maxReach, pickUpLayerMask))
         {
-            if (!isHolding) uiPrompts.GetComponent<UIPrompts>().PromptE();
-            else { uiPrompts.GetComponent<UIPrompts>().PromptClear(); }
+            if (raycastHit.collider.TryGetComponent(out Component c) && !uiScript.tutorialPlaying)
+            {
+                if (!isHolding && c.gameObject.layer != LayerMask.NameToLayer("Obstructions"))
+                    uiPrompts.GetComponent<UIPrompts>().PromptE();
+                else if (c.gameObject.layer == LayerMask.NameToLayer("Obstructions"))
+                    uiScript.PromptClear();
+            }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -42,6 +49,7 @@ public class GrabThrowDrop : MonoBehaviour
                     {
                         grabbedProp.drop();
                         isHolding = false;
+                        uiScript.PromptClear();
                     }
                 }
                 else if (raycastHit.collider.TryGetComponent(out Component grabbable))
@@ -51,25 +59,28 @@ public class GrabThrowDrop : MonoBehaviour
                     {
                         _Script_CameraToggle.batteriesLeft++;
                         Destroy(obj);
-                        Debug.Log("Got 1 battery!");
+                        StartCoroutine(uiScript.DisplayText($"Got: 1 battery (Total: {_Script_CameraToggle.batteriesLeft})"));
+                        uiScript.PromptClear();
                     }
                     else if (obj.CompareTag("Security Key"))
                     {
                         _Script_PlayerDoor.hasSecurityKey = true;
                         Destroy(obj);
-                        Debug.Log("Got security key!");
+                        StartCoroutine(uiScript.DisplayText("Got: Security Key"));
+                        uiScript.PromptClear();
                         audioSource.PlayOneShot(sfxKeyJingle);
                     }
                     else if (obj.CompareTag("Ballroom Key"))
                     {
                         _Script_PlayerDoor.hasBallroomKey = true;
                         Destroy(obj);
-                        Debug.Log("Got ballroom key!");
+                        StartCoroutine(uiScript.DisplayText("Got: Master Key"));
+                        uiScript.PromptClear();
                         audioSource.PlayOneShot(sfxKeyJingle);
                     }
                 }
             }
-        }
+        } else { if (!uiScript.tutorialPlaying) uiScript.PromptClear(); }
 
         // Throw (LMB)
         if (Input.GetMouseButtonDown(0))
@@ -81,9 +92,17 @@ public class GrabThrowDrop : MonoBehaviour
                     if (grabbedProp.isGrabbed)
                     {
                         grabbedProp.throwProp(playerCameraTrans);
+                        uiScript.PromptClear();
+                        StartCoroutine(ThrowCD());
                     }
                 }
             }
         }
+    }
+
+    private IEnumerator ThrowCD()
+    {
+        yield return new WaitForSeconds(2);
+        isHolding = false;
     }
 }

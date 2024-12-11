@@ -106,8 +106,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.035028365, y: 0.045447208, z: 0.03502312}
-  m_Center: {x: -0.0000026226044, y: -0.00034747124, z: 0}
+  m_Size: {x: 0.020931436, y: 0.03559639, z: 0.020926194}
+  m_Center: {x: -0.002295494, y: -0.0052728984, z: 0.00025477633}
 --- !u!114 &7873512242959842412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,6 +127,7 @@ MonoBehaviour:
   throwForce: 800
   lerpSpeed: 10
   isGrabbed: 0
+  fadeDuration: 2
   shatter:
   - {fileID: 8300000, guid: 6e9f57b58b12ea0469792c894fc9ab4a, type: 3}
   - {fileID: 8300000, guid: cf3734b6bbd56f242b90162188ec5be5, type: 3}

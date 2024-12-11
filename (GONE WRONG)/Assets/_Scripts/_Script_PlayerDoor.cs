@@ -3,10 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class _Script_PlayerDoor : MonoBehaviour
 {
-    public static bool hasSecurityKey = false;
-    public static bool hasBallroomKey = false;
+    public static bool hasSecurityKey;
+    public static bool hasBallroomKey;
 
     public float maxReach = 5f;
+    public GameObject uiPrompts;
+    private UIPrompts uiScript;
 
     public AudioClip sfxRattle;
     public AudioClip sfxUnlock;
@@ -16,8 +18,17 @@ public class _Script_PlayerDoor : MonoBehaviour
     [SerializeField] private LayerMask doorLayerMask;
     private MeshCollider doorCollider;
     private bool isAnimating = false;
-    private bool securityUnlocked = true;
-    private bool ballroomUnlocked = true;
+    private bool securityUnlocked;
+    private bool ballroomUnlocked;
+
+    void Start()
+    {
+        uiScript = uiPrompts.GetComponent<UIPrompts>();
+        hasSecurityKey = false;
+        securityUnlocked = false;
+        hasBallroomKey = false;
+        ballroomUnlocked = false;
+    }
 
     void Update()
     {
@@ -29,6 +40,7 @@ public class _Script_PlayerDoor : MonoBehaviour
                 {
                     if (door.gameObject.CompareTag("Door"))
                     {
+                        audioSource = door.transform.parent.GetComponent<AudioSource>();
                         doorCollider = door.GetComponent<MeshCollider>();
                         doorCollider.enabled = false;
 
@@ -36,13 +48,16 @@ public class _Script_PlayerDoor : MonoBehaviour
                     }
                     else if (door.gameObject.CompareTag("Security Door"))
                     {
+                        audioSource = door.transform.parent.GetComponent<AudioSource>();
                         if (!hasSecurityKey)
                         {
+                            StartCoroutine(uiScript.DisplayText("Needs: Security Key"));
                             audioSource.PlayOneShot(sfxRattle);
                             return;
                         }
                         else if (!securityUnlocked)
                         {
+                            StartCoroutine(uiScript.DisplayText("Used: Security Key"));
                             audioSource.PlayOneShot(sfxUnlock);
                             securityUnlocked = true;
                             return;
@@ -55,13 +70,16 @@ public class _Script_PlayerDoor : MonoBehaviour
                     }
                     else if (door.gameObject.CompareTag("Ballroom Door"))
                     {
+                        audioSource = door.GetComponent<AudioSource>();
                         if (!hasBallroomKey)
                         {
+                            StartCoroutine(uiScript.DisplayText("Needs: Master Key"));
                             audioSource.PlayOneShot(sfxRattle);
                             return;
                         }
                         else if (!ballroomUnlocked)
                         {
+                            StartCoroutine(uiScript.DisplayText("Used: Master Key"));
                             audioSource.PlayOneShot(sfxUnlock);
                             ballroomUnlocked = true;
                             return;
