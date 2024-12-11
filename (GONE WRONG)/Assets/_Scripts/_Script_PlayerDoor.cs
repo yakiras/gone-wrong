@@ -38,6 +38,7 @@ public class _Script_PlayerDoor : MonoBehaviour
             {
                 if (raycastHit.collider.TryGetComponent(out Component door))
                 {
+
                     if (door.gameObject.CompareTag("Door"))
                     {
                         audioSource = door.transform.parent.GetComponent<AudioSource>();
@@ -70,7 +71,7 @@ public class _Script_PlayerDoor : MonoBehaviour
                     }
                     else if (door.gameObject.CompareTag("Ballroom Door"))
                     {
-                        audioSource = door.GetComponent<AudioSource>();
+                        audioSource = door.transform.parent.GetComponent<AudioSource>();
                         if (!hasBallroomKey)
                         {
                             StartCoroutine(uiScript.DisplayText("Needs: Master Key"));
@@ -88,6 +89,7 @@ public class _Script_PlayerDoor : MonoBehaviour
                         // Attempt to load the scene
                         try
                         {
+                            Cursor.lockState = CursorLockMode.None;
                             SceneManager.LoadScene("WinState", LoadSceneMode.Single);
                             Debug.Log("Attempting to load WinState scene");
                         }
