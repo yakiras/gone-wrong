@@ -7,12 +7,14 @@ using UnityEngine.UI;
 public class UIPrompts : MonoBehaviour
 {
     public GameObject journalEntryObj;
+    public GameObject textPromptObj;
     public AudioClip sfxPenScribble;
     public AudioClip sfxOpenBook;
     public AudioClip sfxCloseBook;
-
     private AudioSource audioSource;
+
     private TextMeshProUGUI currentEntryText;
+    private TextMeshProUGUI textPrompt;
     private int currentEntryNum = 0;
     private bool journalOpen;
     private bool journalDisabled = false;
@@ -43,6 +45,8 @@ public class UIPrompts : MonoBehaviour
         uiOverlay.enabled = false;
         currentEntryText = journalEntryObj.GetComponent<TextMeshProUGUI>();
         currentEntryText.enabled = false;
+        textPrompt = textPromptObj.GetComponent<TextMeshProUGUI>();
+        textPrompt.enabled = false;
         journalOpen = false;
 
         StartCoroutine(StartTutorial());
@@ -127,5 +131,13 @@ public class UIPrompts : MonoBehaviour
     public void PromptClear()
     {
         uiOverlay.enabled = false;
+    }
+
+    public IEnumerator DisplayText(string prompt)
+    {
+        textPrompt.enabled = true;
+        textPrompt.text = prompt;
+        yield return new WaitForSeconds(2f);
+        textPrompt.enabled = false;
     }
 }

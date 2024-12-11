@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,10 +8,16 @@ public class _Script_PlayerDoor : MonoBehaviour
 
     public float maxReach = 5f;
 
+    public AudioClip sfxRattle;
+    public AudioClip sfxUnlock;
+    private AudioSource audioSource;
+
     [SerializeField] private Transform playerCameraTrans;
     [SerializeField] private LayerMask doorLayerMask;
     private MeshCollider doorCollider;
     private bool isAnimating = false;
+    private bool securityUnlocked = true;
+    private bool ballroomUnlocked = true;
 
     void Update()
     {
@@ -35,7 +37,16 @@ public class _Script_PlayerDoor : MonoBehaviour
                     else if (door.gameObject.CompareTag("Security Door"))
                     {
                         if (!hasSecurityKey)
+                        {
+                            audioSource.PlayOneShot(sfxRattle);
                             return;
+                        }
+                        else if (!securityUnlocked)
+                        {
+                            audioSource.PlayOneShot(sfxUnlock);
+                            securityUnlocked = true;
+                            return;
+                        }
 
                         doorCollider = door.GetComponent<MeshCollider>();
                         doorCollider.enabled = false;
@@ -45,7 +56,16 @@ public class _Script_PlayerDoor : MonoBehaviour
                     else if (door.gameObject.CompareTag("Ballroom Door"))
                     {
                         if (!hasBallroomKey)
+                        {
+                            audioSource.PlayOneShot(sfxRattle);
                             return;
+                        }
+                        else if (!ballroomUnlocked)
+                        {
+                            audioSource.PlayOneShot(sfxUnlock);
+                            ballroomUnlocked = true;
+                            return;
+                        }
 
                         // Attempt to load the scene
                         try
