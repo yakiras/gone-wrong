@@ -7,12 +7,18 @@ public class _Script_doorHinge : MonoBehaviour
 
     private float defaultAngle;
     private bool isOpen = false;
-    private Transform hinge;
     private bool isAnimating = false;
+    private Transform hinge;
     private Quaternion targetRotation;
+
+    private AudioSource audioSource;
+    public AudioClip sfxOpen;
+    public AudioClip sfxClose;
+    public AudioClip sfxSlam;
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         hinge = gameObject.transform;
         if (version1)
             defaultAngle = 0f;
@@ -25,7 +31,6 @@ public class _Script_doorHinge : MonoBehaviour
         if (isAnimating)
         {
             hinge.rotation = Quaternion.Lerp(hinge.rotation, targetRotation, Time.deltaTime * rotateSpeed);
-            //Debug.Log(hinge.rotation.y);
 
             // Stop animating if we've reached the target rotation
             if (Quaternion.Angle(hinge.rotation, targetRotation) < 0.1f)
@@ -33,6 +38,7 @@ public class _Script_doorHinge : MonoBehaviour
                 hinge.rotation = targetRotation;
                 hinge.GetChild(0).GetComponent<MeshCollider>().enabled = true;
                 isAnimating = false;
+                //audioSource.PlayOneShot(sfxSlam);
             }
         }
     }
@@ -42,7 +48,16 @@ public class _Script_doorHinge : MonoBehaviour
         if (isAnimating)
             return;
 
-        targetRotation = isOpen ? Quaternion.Euler(0, defaultAngle, 0) : Quaternion.Euler(0, defaultAngle - 90f, 0);
+        if (isOpen)
+        {
+            targetRotation = Quaternion.Euler(0, defaultAngle, 0);
+            audioSource.PlayOneShot(sfxClose);
+        }
+        else
+        {
+            targetRotation = Quaternion.Euler(0, defaultAngle - 90f, 0);
+            audioSource.PlayOneShot(sfxOpen);
+        }
 
         isAnimating = true;
         isOpen = !isOpen;

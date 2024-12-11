@@ -3,7 +3,10 @@ guid: 6685255a09ab06547a453f41045bed1e
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - sfxOpen: {fileID: 8300000, guid: 55746398e9d784b4696e6febe6b4bcee, type: 3}
+  - sfxClose: {fileID: 8300000, guid: abc9fa65d808475499ca51eea603eb17, type: 3}
+  - sfxSlam: {fileID: 8300000, guid: db4defc5de6d4e2449d6e0cbfd7b6019, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

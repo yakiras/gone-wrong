@@ -27,7 +27,7 @@ public class GrabThrowDrop : MonoBehaviour
         if (Physics.Raycast(playerCameraTrans.position, playerCameraTrans.forward, out RaycastHit raycastHit, maxReach, pickUpLayerMask))
         {
             if (!isHolding) uiPrompts.GetComponent<UIPrompts>().PromptE();
-            else uiPrompts.GetComponent<UIPrompts>().PromptClear();
+            else { uiPrompts.GetComponent<UIPrompts>().PromptClear(); return; }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
