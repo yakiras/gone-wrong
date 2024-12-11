@@ -33,6 +33,7 @@ public class _Script_SoundMonsterAI : MonoBehaviour
     Vector3 soundDestination;
 
     bool patrolling;
+    bool chasing;
     bool stunned;
     bool canStun;
 
@@ -48,7 +49,6 @@ public class _Script_SoundMonsterAI : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         stepTimer = clickInterval;
 
-        patrolling = true;
         stunned = false;
         canStun = true;
         StartPatrolling();
@@ -75,7 +75,16 @@ public class _Script_SoundMonsterAI : MonoBehaviour
             GoToDestination();
         }
 
-        if (!patrolling && Vector3.Distance(transform.position, soundDestination) < 1)
+        if (chasing) 
+        {
+            Chase();
+            if (Vector3.Distance(transform.position, soundDestination) < 1) 
+            {
+                Debug.Log("Going back to patrolling!!");
+                StartPatrolling();
+            }
+        }
+        if (chasing && Vector3.Distance(transform.position, soundDestination) < 1)
         {
             Debug.Log("Going back to patrolling!!");
             StartPatrolling();
@@ -92,7 +101,7 @@ public class _Script_SoundMonsterAI : MonoBehaviour
 
         lastPos = transform.position;
 
-        if (!isMoving) 
+        if (!isMoving)
         {
             StartCoroutine(WaitToResumePatrolling());
         }
@@ -103,9 +112,17 @@ public class _Script_SoundMonsterAI : MonoBehaviour
         audioSource.PlayOneShot(aggro);
         patrolling = false;
         agent.speed = chasingSpeed;
+        chasing = true;
         print($"moving towards sound at {sound.position}");
-        agent.SetDestination(sound.position);
         soundDestination = sound.position;
+        StartCoroutine(WaitToLoseAggro());
+    }
+
+    void Chase()
+    {
+        transform.LookAt(soundDestination);
+        transform.position += transform.forward * chasingSpeed * Time.deltaTime;
+        print(transform.position);
     }
 
     void GoToDestination()
@@ -155,6 +172,7 @@ public class _Script_SoundMonsterAI : MonoBehaviour
     public void StartPatrolling()
     {
         agent.speed = patrollingSpeed;
+        chasing = false;
         patrolling = true;
         GoToDestination();
     }
@@ -179,6 +197,19 @@ public class _Script_SoundMonsterAI : MonoBehaviour
         for (int i = 0; i < 15; i++)
         {
             if (isMoving)
+            {
+                yield break;
+            }
+            yield return new WaitForSeconds(0.25f);
+        }
+        StartPatrolling();
+    }
+
+    public IEnumerator WaitToLoseAggro() 
+    {
+        for (int i = 0; i < 20; i++)
+        {
+            if (patrolling)
             {
                 yield break;
             }
