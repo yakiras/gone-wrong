@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class _Script_MainMenuController : MonoBehaviour
 {
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void PlayGame()
     {
         SceneManager.LoadScene("Floorplan Testing");
