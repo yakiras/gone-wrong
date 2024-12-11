@@ -36,6 +36,9 @@ public class _Script_SoundMonsterAI : MonoBehaviour
     bool stunned;
     bool canStun;
 
+    public Vector3 lastPos;
+    public bool isMoving;
+
 
     // Start is called before the first frame update
     void Start()
@@ -72,9 +75,26 @@ public class _Script_SoundMonsterAI : MonoBehaviour
             GoToDestination();
         }
 
-        if (!patrolling && Vector3.Distance(transform.position, soundDestination) < 1) 
+        if (!patrolling && Vector3.Distance(transform.position, soundDestination) < 1)
         {
+            Debug.Log("Going back to patrolling!!");
             StartPatrolling();
+        }
+
+        if (transform.position != lastPos)
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
+        lastPos = transform.position;
+
+        if (!isMoving) 
+        {
+            StartCoroutine(WaitToResumePatrolling());
         }
     }
 
@@ -152,5 +172,18 @@ public class _Script_SoundMonsterAI : MonoBehaviour
             AudioClip clip = click[Random.Range(0, click.Length)];
             audioSource.PlayOneShot(clip);
         }
+    }
+
+    public IEnumerator WaitToResumePatrolling()
+    {
+        for (int i = 0; i < 15; i++)
+        {
+            if (isMoving)
+            {
+                yield break;
+            }
+            yield return new WaitForSeconds(0.25f);
+        }
+        StartPatrolling();
     }
 }

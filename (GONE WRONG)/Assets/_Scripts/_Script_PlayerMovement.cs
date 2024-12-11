@@ -62,6 +62,9 @@ public class _Script_PlayerMovement : MonoBehaviour
             if (stepTimer <= 0f)
             {
                 PlayRunSound();
+                float soundRange = 30f;
+                var sound = new Sound(transform.position, soundRange);
+                Sounds.MakeSound(sound);
                 stepTimer = runInterval;
             }
         }
@@ -76,6 +79,9 @@ public class _Script_PlayerMovement : MonoBehaviour
                 if (stepTimer <= 0f)
                 {
                     PlayWalkSound();
+                    float soundRange = 20f;
+                    var sound = new Sound(transform.position, soundRange);
+                    Sounds.MakeSound(sound);
                     stepTimer = walkInterval;
                 }
             }
