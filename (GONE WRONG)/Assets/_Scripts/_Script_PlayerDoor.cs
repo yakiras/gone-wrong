@@ -89,7 +89,6 @@ public class _Script_PlayerDoor : MonoBehaviour
                         // Attempt to load the scene
                         try
                         {
-                            Cursor.lockState = CursorLockMode.None;
                             SceneManager.LoadScene("WinState", LoadSceneMode.Single);
                             Debug.Log("Attempting to load WinState scene");
                         }
