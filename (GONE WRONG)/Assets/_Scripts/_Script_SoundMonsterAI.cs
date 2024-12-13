@@ -33,7 +33,8 @@ public class _Script_SoundMonsterAI : MonoBehaviour
     Vector3 soundDestination;
 
     bool patrolling;
-    bool chasing;
+    bool chasingSound;
+    bool chasingPlayer;
     bool stunned;
     bool canStun;
 
@@ -69,25 +70,32 @@ public class _Script_SoundMonsterAI : MonoBehaviour
             }
         }
 
+        if (chasingSound && Vector3.Distance(transform.position, player.transform.position) < 3)
+        {
+            Debug.Log("Now chasing player");
+            chasingPlayer = true;
+            chasingSound = false;
+        }
+
+        if (chasingPlayer)
+        {
+            ChasePlayer();
+        }
+
         if (patrolling && Vector3.Distance(transform.position, currentDestination) < 1)
         {
             SetNextWaypoint();
             GoToDestination();
         }
 
-        if (chasing) 
+        if (chasingSound)
         {
-            Chase();
-            if (Vector3.Distance(transform.position, soundDestination) < 1) 
+            ChaseSound();
+            if (Vector3.Distance(transform.position, soundDestination) < 1)
             {
                 Debug.Log("Going back to patrolling!!");
                 StartPatrolling();
             }
-        }
-        if (chasing && Vector3.Distance(transform.position, soundDestination) < 1)
-        {
-            Debug.Log("Going back to patrolling!!");
-            StartPatrolling();
         }
 
         if (transform.position != lastPos)
@@ -109,20 +117,26 @@ public class _Script_SoundMonsterAI : MonoBehaviour
 
     public void ReactToSound(Sound sound)
     {
-        audioSource.PlayOneShot(aggro);
+        if (!chasingSound && !chasingPlayer)
+            audioSource.PlayOneShot(aggro);
         patrolling = false;
         agent.speed = chasingSpeed;
-        chasing = true;
+        chasingSound = true;
         print($"moving towards sound at {sound.position}");
         soundDestination = sound.position;
         StartCoroutine(WaitToLoseAggro());
     }
 
-    void Chase()
+    void ChaseSound()
     {
         transform.LookAt(soundDestination);
         transform.position += transform.forward * chasingSpeed * Time.deltaTime;
-        print(transform.position);
+    }
+
+    void ChasePlayer()
+    {
+        transform.LookAt(player.transform);
+        transform.position += transform.forward * chasingSpeed * Time.deltaTime;
     }
 
     void GoToDestination()
@@ -172,7 +186,8 @@ public class _Script_SoundMonsterAI : MonoBehaviour
     public void StartPatrolling()
     {
         agent.speed = patrollingSpeed;
-        chasing = false;
+        chasingSound = false;
+        chasingPlayer = false;
         patrolling = true;
         GoToDestination();
     }
@@ -205,7 +220,7 @@ public class _Script_SoundMonsterAI : MonoBehaviour
         StartPatrolling();
     }
 
-    public IEnumerator WaitToLoseAggro() 
+    public IEnumerator WaitToLoseAggro()
     {
         for (int i = 0; i < 20; i++)
         {
