@@ -5,8 +5,8 @@ using UnityEngine;
 public class GrabThrowDrop : MonoBehaviour
 {
     public float maxReach = 5f;
-    public GameObject uiPrompts;
-    private UIPrompts uiScript;
+    public UIPrompts uiScript;
+    public JournalPrompts journalScript;
 
     [SerializeField] private Transform playerCameraTrans;
     [SerializeField] private Transform propGrabPointTrans;
@@ -19,7 +19,6 @@ public class GrabThrowDrop : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        uiScript = uiPrompts.GetComponent<UIPrompts>();
         isHolding = false;
     }
 
@@ -31,7 +30,7 @@ public class GrabThrowDrop : MonoBehaviour
             if (raycastHit.collider.TryGetComponent(out Component c) && !uiScript.tutorialPlaying)
             {
                 if (!isHolding && c.gameObject.layer != LayerMask.NameToLayer("Obstructions"))
-                    uiPrompts.GetComponent<UIPrompts>().PromptE();
+                    uiScript.PromptE();
                 else if (c.gameObject.layer == LayerMask.NameToLayer("Obstructions"))
                     uiScript.PromptClear();
             }
@@ -68,6 +67,7 @@ public class GrabThrowDrop : MonoBehaviour
                         Destroy(obj);
                         StartCoroutine(uiScript.DisplayText("Got: Security Key"));
                         uiScript.PromptClear();
+                        journalScript.PromptJournal(2);
                         audioSource.PlayOneShot(sfxKeyJingle);
                     }
                     else if (obj.CompareTag("Ballroom Key"))
@@ -76,6 +76,7 @@ public class GrabThrowDrop : MonoBehaviour
                         Destroy(obj);
                         StartCoroutine(uiScript.DisplayText("Got: Master Key"));
                         uiScript.PromptClear();
+                        journalScript.PromptJournal(3);
                         audioSource.PlayOneShot(sfxKeyJingle);
                     }
                 }

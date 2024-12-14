@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,19 +7,10 @@ public class UIPrompts : MonoBehaviour
 {
     public float tutorialLength = 4f;
     public bool tutorialPlaying;
-    public GameObject journalEntryObj;
     public GameObject textPromptObj;
-    public AudioClip sfxPenScribble;
-    public AudioClip sfxOpenBook;
-    public AudioClip sfxCloseBook;
-    private AudioSource audioSource;
+    public JournalPrompts journalScript;
 
-    private TextMeshProUGUI currentEntryText;
     private TextMeshProUGUI textPrompt;
-    private int currentEntryNum = 0;
-    private bool journalOpen;
-    private bool journalDisabled = false;
-
     private Image uiOverlay;
 
     public Sprite promptWASD;
@@ -32,66 +22,27 @@ public class UIPrompts : MonoBehaviour
     public Sprite promptSpace;
     public Sprite promptR;
 
-    public Sprite promptJournal;
-    public Sprite journalOverlay;
-
-    private string[] JournalEntryList = { "This is Entry #1.",
-                                          "This is Entry #2.",
-                                          "This is Entry #3.", };
-
     void Start()
     {
-        audioSource = transform.parent.parent.GetComponent<AudioSource>();
-
         uiOverlay = GetComponent<Image>();
         uiOverlay.enabled = false;
-        currentEntryText = journalEntryObj.GetComponent<TextMeshProUGUI>();
-        currentEntryText.enabled = false;
         textPrompt = textPromptObj.GetComponent<TextMeshProUGUI>();
         textPrompt.enabled = false;
-        journalOpen = false;
 
         StartCoroutine(StartTutorial());
         tutorialPlaying = true;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.J) && !journalDisabled)
-        {
-            if (!journalOpen)
-            {
-                audioSource.PlayOneShot(sfxOpenBook);
-
-                uiOverlay.enabled = true;
-                uiOverlay.sprite = journalOverlay;
-                currentEntryText.enabled = true;
-                currentEntryText.text = JournalEntryList[currentEntryNum];
-            }
-            else
-            {
-                audioSource.PlayOneShot(sfxCloseBook);
-
-                uiOverlay.enabled = false;
-                currentEntryText.enabled = false;
-            }
-
-            journalOpen = !journalOpen;
-        }
     }
 
     IEnumerator StartTutorial()
     {
         // JOURNAL PROMPT + NEW ENTRY //
         yield return new WaitForSeconds(3);
-        uiOverlay.sprite = promptJournal;
-        uiOverlay.enabled = true;
-        audioSource.PlayOneShot(sfxPenScribble);
+        journalScript.PromptJournal(0);
 
         // WASD PROMPT //
-        yield return new WaitUntil(() => (journalOpen));
-        yield return new WaitUntil(() => (!journalOpen));
-        journalDisabled = true;
+        yield return new WaitUntil(() => (journalScript.journalOpen));
+        yield return new WaitUntil(() => (!journalScript.journalOpen));
+        journalScript.journalDisabled = true;
         uiOverlay.enabled = true;
         uiOverlay.sprite = promptWASD;
 
@@ -106,7 +57,7 @@ public class UIPrompts : MonoBehaviour
         // FINISH TUTORIAL //
         yield return new WaitForSeconds(tutorialLength);
         uiOverlay.enabled = false;
-        journalDisabled = false;
+        journalScript.journalDisabled = false;
 
         tutorialPlaying = false;
     }
@@ -122,14 +73,6 @@ public class UIPrompts : MonoBehaviour
     public void PromptE()
     {
         uiOverlay.sprite = promptE;
-        uiOverlay.enabled = true;
-    }
-
-    public void PromptJournal()
-    {
-        currentEntryNum++;
-        uiOverlay.sprite = promptJournal;
-        audioSource.PlayOneShot(sfxPenScribble);
         uiOverlay.enabled = true;
     }
 
