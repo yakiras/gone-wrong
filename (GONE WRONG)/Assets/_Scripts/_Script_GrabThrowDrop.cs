@@ -31,7 +31,7 @@ public class GrabThrowDrop : MonoBehaviour
             {
                 if (!isHolding && c.gameObject.layer != LayerMask.NameToLayer("Obstructions"))
                     uiScript.PromptE();
-                else if (c.gameObject.layer == LayerMask.NameToLayer("Obstructions"))
+                if (c.gameObject.layer == LayerMask.NameToLayer("Obstructions") || journalScript.journalPrompted)
                     uiScript.PromptClear();
             }
 

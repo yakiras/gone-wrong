@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,11 +9,13 @@ public class JournalPrompts : MonoBehaviour
 {
     public bool journalOpen;
     public bool journalDisabled = false;
+    public bool journalPrompted;
 
     public GameObject journalPageObj1;
     public GameObject journalPageObj2;
     public Sprite journalPrompt;
     public Sprite journalBook;
+    public UIPrompts uiScript;
 
     public AudioClip sfxPenScribble;
     public AudioClip sfxOpenBook;
@@ -53,6 +56,7 @@ public class JournalPrompts : MonoBehaviour
         journalPage2.enabled = false;
 
         journalOpen = false;
+        journalPrompted = false;
     }
 
     void Update()
@@ -67,6 +71,9 @@ public class JournalPrompts : MonoBehaviour
                 journalOverlay.sprite = journalBook;
                 journalPage1.enabled = true;
                 journalPage2.enabled = true;
+
+                journalPrompted = false;
+                uiScript.ClearText();
             }
             else
             {
@@ -82,13 +89,19 @@ public class JournalPrompts : MonoBehaviour
     }
     public void PromptJournal(int newestEntry)
     {
+        journalPrompted = true;
         journalOverlay.sprite = journalPrompt;
         audioSource.PlayOneShot(sfxPenScribble);
         journalOverlay.enabled = true;
         currentEntryNum = newestEntry;
-        if (newestEntry < 2)
-            journalPage1.text += JournalEntryList[newestEntry];
-        else
-            journalPage2.text += JournalEntryList[newestEntry];
+        journalPage1.text = "";
+        journalPage2.text = "";
+        for (int i = 0; i <= newestEntry; i++)
+        {
+            if (i < 2)
+                journalPage1.text += JournalEntryList[i];
+            else
+                journalPage2.text += JournalEntryList[i];
+        }
     }
 }

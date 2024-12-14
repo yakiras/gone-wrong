@@ -88,4 +88,9 @@ public class UIPrompts : MonoBehaviour
         yield return new WaitForSeconds(3);
         textPrompt.enabled = false;
     }
+
+    public void ClearText()
+    {
+        textPrompt.enabled = false;
+    }
 }

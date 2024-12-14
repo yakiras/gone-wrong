@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class _Script_PlayerCamera : MonoBehaviour
 {
-    public float mouseSensitivity = 500f;
+    public float mouseSensitivity = 300f;
     public Transform playerBody;
 
     public Image cameraOverlay;
