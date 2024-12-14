@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6118852945923879423}
   - component: {fileID: 7604482109460859455}
   - component: {fileID: 3716248343446495593}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: door_frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,8 @@ GameObject:
   - component: {fileID: 6183068801471160192}
   - component: {fileID: 5851185695820204980}
   - component: {fileID: 9034374995606833386}
-  m_Layer: 10
+  - component: {fileID: 4684869719745735266}
+  m_Layer: 0
   m_Name: door_hinge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,8 +174,107 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6685255a09ab06547a453f41045bed1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version1: 1
+  version1: 0
   rotateSpeed: 3
+  sfxOpen: {fileID: 8300000, guid: 55746398e9d784b4696e6febe6b4bcee, type: 3}
+  sfxClose: {fileID: 8300000, guid: abc9fa65d808475499ca51eea603eb17, type: 3}
+  sfxSlam: {fileID: 8300000, guid: db4defc5de6d4e2449d6e0cbfd7b6019, type: 3}
+--- !u!82 &4684869719745735266
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955381108255992387}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -656207276811565325, guid: 82686403b94c715418f26990ef64dee6, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3646998929697734474
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,7 +284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5947899662692801131}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +301,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.25, y: 1.222, z: 32.63}
-  m_LocalScale: {x: 35, y: 35, z: 35}
+  m_LocalScale: {x: 58.33333, y: 58.33333, z: 58.33333}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6183068801471160192}
@@ -220,7 +320,7 @@ GameObject:
   - component: {fileID: 1946082209144994661}
   - component: {fileID: 3213517654788949260}
   - component: {fileID: 6938875678143781269}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: door
   m_TagString: Door
   m_Icon: {fileID: 0}
