@@ -79,6 +79,12 @@ public class GrabThrowDrop : MonoBehaviour
                         journalScript.PromptJournal(3);
                         audioSource.PlayOneShot(sfxKeyJingle);
                     }
+                    else if (obj.CompareTag("Switch"))
+                    {
+                        Debug.Log("Switch hit");
+                        Transform switchHinge = obj.transform.parent;
+                        switchHinge.GetComponent<FlipSwitch>().Flip();
+                    }
                 }
             }
         } else { if (!uiScript.tutorialPlaying) uiScript.PromptClear(); }

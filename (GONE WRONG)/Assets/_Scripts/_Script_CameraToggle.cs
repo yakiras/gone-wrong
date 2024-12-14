@@ -5,6 +5,7 @@ using UnityEngine;
 public class _Script_CameraToggle : MonoBehaviour
 {
     public static int batteriesLeft;
+    public static bool flashlightAvailable;
 
     public float stunTime = 5;
     public float depleteInterval = 0.5f;
@@ -13,23 +14,29 @@ public class _Script_CameraToggle : MonoBehaviour
     public _Script_PlayerCamera cameraClass;
     public GameObject enemiesParent;
     public GameObject uiPrompts;
+    public Light flashlight;
     private UIPrompts uiScript;
 
     public AudioClip sfxCameraOn;
     public AudioClip sfxCameraOff;
 
     private AudioSource audioSource;
-    private bool cameraOn;
     private int batteryLevel;
     public bool canUseCamera;
+    private bool cameraOn;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         uiScript = uiPrompts.GetComponent<UIPrompts>();
+
+        flashlightAvailable = false;
+        flashlight.enabled = false;
+
         canUseCamera = true;
         cameraOn = false;
+
         batteryLevel = 100;
         batteriesLeft = 1;
     }
@@ -67,6 +74,12 @@ public class _Script_CameraToggle : MonoBehaviour
                 StartCoroutine(uiScript.DisplayText($"Batteries Left: {batteriesLeft}"));
             }
             else StartCoroutine(uiScript.DisplayText("No batteries left"));
+        }
+
+        // Toggle flashlight on/off
+        if (flashlightAvailable && Input.GetKeyDown(KeyCode.F))
+        {
+            flashlight.enabled = !flashlight.enabled;
         }
 
         if (cameraOn)
