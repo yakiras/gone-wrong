@@ -15,6 +15,8 @@ public class JournalPrompts : MonoBehaviour
     public GameObject journalPageObj2;
     public Sprite journalPrompt;
     public Sprite journalBook;
+    public Sprite promptF;
+    public Sprite promptR;
     public UIPrompts uiScript;
 
     public AudioClip sfxPenScribble;
@@ -65,26 +67,28 @@ public class JournalPrompts : MonoBehaviour
         {
             if (!journalOpen)
             {
+                journalPrompted = true;
                 audioSource.PlayOneShot(sfxOpenBook);
 
                 journalOverlay.enabled = true;
                 journalOverlay.sprite = journalBook;
                 journalPage1.enabled = true;
                 journalPage2.enabled = true;
+                journalOpen = true;
 
                 journalPrompted = false;
                 uiScript.ClearText();
             }
             else
             {
+                journalPrompted = false;
                 audioSource.PlayOneShot(sfxCloseBook);
 
                 journalOverlay.enabled = false;
                 journalPage1.enabled = false;
                 journalPage2.enabled = false;
+                journalOpen = false;
             }
-
-            journalOpen = !journalOpen;
         }
     }
     public void PromptJournal(int newestEntry)
@@ -103,5 +107,25 @@ public class JournalPrompts : MonoBehaviour
             else
                 journalPage2.text += JournalEntryList[i];
         }
+    }
+
+    public IEnumerator PromptF()
+    {
+        journalPrompted = true;
+        journalOverlay.sprite = promptF;
+        journalOverlay.enabled = true;
+        yield return new WaitForSeconds(5);
+        journalOverlay.enabled = false;
+        journalPrompted = false;
+    }
+
+    public IEnumerator PromptR()
+    {
+        journalPrompted = true;
+        journalOverlay.sprite = promptR;
+        journalOverlay.enabled = true;
+        yield return new WaitUntil(() => (Input.GetKeyDown(KeyCode.R) || Time.time > 5000));
+        journalOverlay.enabled = false;
+        journalPrompted = false;
     }
 }
