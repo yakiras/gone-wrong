@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class UIPrompts : MonoBehaviour
 {
-    public float tutorialLength = 4f;
+    public float tutorialLength = 3f;
     public bool tutorialPlaying;
     public GameObject textPromptObj;
     public JournalPrompts journalScript;
@@ -41,9 +41,16 @@ public class UIPrompts : MonoBehaviour
         yield return new WaitForSeconds(3);
         journalScript.PromptJournal(0);
 
-        // WASD PROMPT //
+        // MAP PROMPT //
         yield return new WaitUntil(() => (journalScript.journalOpen));
         yield return new WaitUntil(() => (!journalScript.journalOpen));
+        uiOverlay.enabled = true;
+        uiOverlay.sprite = promptM;
+
+        // WASD PROMPT //
+        yield return new WaitUntil(() => (journalScript.mapOpen));
+        uiOverlay.enabled = false;
+        yield return new WaitUntil(() => (!journalScript.mapOpen));
         journalScript.journalDisabled = true;
         uiOverlay.enabled = true;
         uiOverlay.sprite = promptWASD;
@@ -59,8 +66,8 @@ public class UIPrompts : MonoBehaviour
         // FINISH TUTORIAL //
         yield return new WaitForSeconds(tutorialLength);
         uiOverlay.enabled = false;
-        journalScript.journalDisabled = false;
 
+        journalScript.journalDisabled = false;
         tutorialPlaying = false;
     }
 

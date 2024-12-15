@@ -8,14 +8,16 @@ using UnityEngine.UI;
 public class JournalPrompts : MonoBehaviour
 {
     public bool journalOpen;
+    public bool mapOpen;
     public bool journalDisabled = false;
     public bool journalPrompted;
 
     public GameObject journalPageObj1;
     public GameObject journalPageObj2;
-    public Sprite mapPrompt;
     public Sprite journalPrompt;
     public Sprite journalBook;
+    public Sprite mapPage;
+
     public Sprite promptF;
     public Sprite promptR;
     public UIPrompts uiScript;
@@ -89,6 +91,25 @@ public class JournalPrompts : MonoBehaviour
                 journalPage1.enabled = false;
                 journalPage2.enabled = false;
                 journalOpen = false;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.M) && !journalDisabled)
+        {
+            if (!mapOpen)
+            {
+                audioSource.PlayOneShot(sfxOpenBook);
+
+                journalOverlay.enabled = true;
+                journalOverlay.sprite = mapPage;
+                mapOpen = true;
+                uiScript.ClearText();
+            }
+            else
+            {
+                audioSource.PlayOneShot(sfxCloseBook);
+
+                journalOverlay.enabled = false;
+                mapOpen = false;
             }
         }
     }
