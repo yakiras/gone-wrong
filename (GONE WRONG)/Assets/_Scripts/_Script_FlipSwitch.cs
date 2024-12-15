@@ -39,6 +39,7 @@ public class FlipSwitch : MonoBehaviour
             return;
 
         isAnimating = true;
+        GetComponent<AudioSource>().Play();
 
         foreach (Transform parent in lampsSecurity.transform)
         {
