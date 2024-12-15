@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class _Script_doorHinge : MonoBehaviour
 {
@@ -16,8 +17,11 @@ public class _Script_doorHinge : MonoBehaviour
     public AudioClip sfxClose;
     public AudioClip sfxSlam;
 
+    public NavMeshObstacle obstacle;
+
     private void Start()
     {
+        obstacle = GetComponent<NavMeshObstacle>();
         audioSource = GetComponent<AudioSource>();
         hinge = gameObject.transform;
         if (version1)
@@ -41,6 +45,7 @@ public class _Script_doorHinge : MonoBehaviour
                 //audioSource.PlayOneShot(sfxSlam);
             }
         }
+
     }
 
     public void openClose()
@@ -52,11 +57,13 @@ public class _Script_doorHinge : MonoBehaviour
         {
             targetRotation = Quaternion.Euler(0, defaultAngle, 0);
             audioSource.PlayOneShot(sfxClose);
+            obstacle.enabled = true;
         }
         else
         {
             targetRotation = Quaternion.Euler(0, defaultAngle - 90f, 0);
             audioSource.PlayOneShot(sfxOpen);
+            obstacle.enabled = false;
         }
 
         isAnimating = true;
