@@ -67,6 +67,7 @@ public class JournalPrompts : MonoBehaviour
         {
             if (!journalOpen)
             {
+                journalPrompted = true;
                 audioSource.PlayOneShot(sfxOpenBook);
 
                 journalOverlay.enabled = true;
@@ -80,6 +81,7 @@ public class JournalPrompts : MonoBehaviour
             }
             else
             {
+                journalPrompted = false;
                 audioSource.PlayOneShot(sfxCloseBook);
 
                 journalOverlay.enabled = false;
@@ -109,17 +111,21 @@ public class JournalPrompts : MonoBehaviour
 
     public IEnumerator PromptF()
     {
+        journalPrompted = true;
         journalOverlay.sprite = promptF;
         journalOverlay.enabled = true;
         yield return new WaitForSeconds(5);
         journalOverlay.enabled = false;
+        journalPrompted = false;
     }
 
     public IEnumerator PromptR()
     {
+        journalPrompted = true;
         journalOverlay.sprite = promptR;
         journalOverlay.enabled = true;
         yield return new WaitUntil(() => (Input.GetKeyDown(KeyCode.R) || Time.time > 5000));
         journalOverlay.enabled = false;
+        journalPrompted = false;
     }
 }
