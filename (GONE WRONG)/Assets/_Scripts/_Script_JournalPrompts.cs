@@ -13,6 +13,7 @@ public class JournalPrompts : MonoBehaviour
 
     public GameObject journalPageObj1;
     public GameObject journalPageObj2;
+    public Sprite mapPrompt;
     public Sprite journalPrompt;
     public Sprite journalBook;
     public Sprite promptF;

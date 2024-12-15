@@ -22,6 +22,8 @@ public class UIPrompts : MonoBehaviour
     public Sprite promptSpace;
     public Sprite promptR;
 
+    public Sprite promptM;
+
     void Start()
     {
         uiOverlay = GetComponent<Image>();
