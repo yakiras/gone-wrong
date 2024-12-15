@@ -17,7 +17,7 @@ public class _Script_PlayerController : MonoBehaviour
 
         if (x == 0 && y == 0 && z == 0) return;
         Vector3 startingPosition = new Vector3(x, y, z);
-        transform.position = startingPosition;
+        //transform.position = startingPosition;
         Debug.Log("setting start position to " + startingPosition);
         
     }
