@@ -99,7 +99,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: dc87e04cdbe987546b5826d24c6fd9ef, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5943b4fe65e81d84a8f3fec3fc18ef9f, type: 2}
+      objectReference: {fileID: 2100000, guid: 9e9a7e582036b374e90548699e4af594, type: 2}
     - target: {fileID: 919132149155446097, guid: dc87e04cdbe987546b5826d24c6fd9ef, type: 3}
       propertyPath: m_Name
       value: kitchenCabinetUpperCorner
