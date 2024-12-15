@@ -13,9 +13,9 @@ public class _Script_CameraToggle : MonoBehaviour
 
     public _Script_PlayerCamera cameraClass;
     public GameObject enemiesParent;
-    public GameObject uiPrompts;
+    public UIPrompts uiScript;
+    public JournalPrompts journalScript;
     public Light flashlight;
-    private UIPrompts uiScript;
 
     public AudioClip sfxCameraOn;
     public AudioClip sfxCameraOff;
@@ -29,7 +29,6 @@ public class _Script_CameraToggle : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        uiScript = uiPrompts.GetComponent<UIPrompts>();
 
         flashlightAvailable = false;
         flashlight.enabled = false;
@@ -121,7 +120,7 @@ public class _Script_CameraToggle : MonoBehaviour
 
             if (batteryLevel <= 25)
             {
-                StartCoroutine(uiPrompts.GetComponent<UIPrompts>().PromptR());
+                StartCoroutine(journalScript.PromptR());
                 cameraClass.UpdateBatteryLvl(1);
             }
             else if (batteryLevel <= 50)

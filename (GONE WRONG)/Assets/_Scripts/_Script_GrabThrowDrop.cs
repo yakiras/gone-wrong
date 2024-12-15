@@ -61,6 +61,13 @@ public class GrabThrowDrop : MonoBehaviour
                         StartCoroutine(uiScript.DisplayText($"Got: 1 battery (Total: {_Script_CameraToggle.batteriesLeft})"));
                         uiScript.PromptClear();
                     }
+                    else if (obj.CompareTag("Flashlight"))
+                    {
+                        Destroy(obj);
+                        uiScript.PromptClear();
+                        _Script_CameraToggle.flashlightAvailable = true;
+                        StartCoroutine(journalScript.PromptF());
+                    }
                     else if (obj.CompareTag("Security Key"))
                     {
                         _Script_PlayerDoor.hasSecurityKey = true;

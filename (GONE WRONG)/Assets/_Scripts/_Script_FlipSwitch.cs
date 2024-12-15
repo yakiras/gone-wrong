@@ -14,7 +14,9 @@ public class FlipSwitch : MonoBehaviour
     public GameObject lampsSecurity;
 
     public Material unlitShade;
+    public GameObject bgm;
 
+    private AudioSource[] bgAudio;
     private bool isAnimating;
     private Quaternion targetRotation;
 
@@ -23,6 +25,7 @@ public class FlipSwitch : MonoBehaviour
         isAnimating = false;
         targetRotation = transform.rotation;
         targetRotation.x += 179f;
+        bgAudio = bgm.GetComponents<AudioSource>();
     }
 
     void Update()
@@ -40,6 +43,8 @@ public class FlipSwitch : MonoBehaviour
 
         isAnimating = true;
         GetComponent<AudioSource>().Play();
+        bgAudio[0].Stop();
+        bgAudio[1].Stop();
 
         foreach (Transform parent in lampsSecurity.transform)
         {

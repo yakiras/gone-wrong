@@ -15,6 +15,8 @@ public class JournalPrompts : MonoBehaviour
     public GameObject journalPageObj2;
     public Sprite journalPrompt;
     public Sprite journalBook;
+    public Sprite promptF;
+    public Sprite promptR;
     public UIPrompts uiScript;
 
     public AudioClip sfxPenScribble;
@@ -103,5 +105,21 @@ public class JournalPrompts : MonoBehaviour
             else
                 journalPage2.text += JournalEntryList[i];
         }
+    }
+
+    public IEnumerator PromptF()
+    {
+        journalOverlay.sprite = promptF;
+        journalOverlay.enabled = true;
+        yield return new WaitForSeconds(5);
+        journalOverlay.enabled = false;
+    }
+
+    public IEnumerator PromptR()
+    {
+        journalOverlay.sprite = promptR;
+        journalOverlay.enabled = true;
+        yield return new WaitUntil(() => (Input.GetKeyDown(KeyCode.R) || Time.time > 5000));
+        journalOverlay.enabled = false;
     }
 }
