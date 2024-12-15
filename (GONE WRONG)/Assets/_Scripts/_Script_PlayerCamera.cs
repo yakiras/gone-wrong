@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class _Script_PlayerCamera : MonoBehaviour
 {
-    public float mouseSensitivity = 300f;
+    public float mouseSensitivity;
     public Transform playerBody;
 
     public Image cameraOverlay;
@@ -32,6 +32,7 @@ public class _Script_PlayerCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        mouseSensitivity = PlayerPrefs.GetFloat("mouseSensitivity", 300f);
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 

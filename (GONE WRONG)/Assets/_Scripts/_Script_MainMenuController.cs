@@ -12,17 +12,20 @@ public class _Script_MainMenuController : MonoBehaviour
     [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider sensitivitySlider;
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.None;
 
+        sensitivitySlider.value = PlayerPrefs.GetFloat("mouseSensitivity", 300);
         masterSlider.value = PlayerPrefs.GetFloat("masterVolume", 1);
         musicSlider.value = PlayerPrefs.GetFloat("musicVolume", 1);
         sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume", 1);
         mixer.SetFloat("Master", Mathf.Log10(masterSlider.value) * 20);
         mixer.SetFloat("Music", Mathf.Log10(musicSlider.value) * 20);
         mixer.SetFloat("SFX", Mathf.Log10(sfxSlider.value) * 20);
+        
     }
 
     public void PlayGame()
@@ -59,5 +62,10 @@ public class _Script_MainMenuController : MonoBehaviour
         float sfxVolume = sfxSlider.value;
         mixer.SetFloat("SFX", Mathf.Log10(sfxVolume) * 20);
         PlayerPrefs.SetFloat("sfxVolume", sfxSlider.value);
+    }
+
+    public void SetSensitivity() 
+    {
+        PlayerPrefs.SetFloat("mouseSensitivity", sensitivitySlider.value);
     }
 }
