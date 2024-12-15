@@ -65,7 +65,7 @@ public class GrabThrowDrop : MonoBehaviour
                     {
                         Destroy(obj);
                         _Script_CameraToggle.flashlightAvailable = true;
-                        journalScript.PromptF();
+                        StartCoroutine(journalScript.PromptF());
                         uiScript.PromptClear();
                     }
                     else if (obj.CompareTag("Security Key"))
