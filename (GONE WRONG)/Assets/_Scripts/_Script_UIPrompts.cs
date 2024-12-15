@@ -62,6 +62,14 @@ public class UIPrompts : MonoBehaviour
         tutorialPlaying = false;
     }
 
+    public IEnumerator PromptR()
+    {
+        uiOverlay.sprite = promptR;
+        uiOverlay.enabled = true;
+        yield return new WaitUntil(() => (Input.GetKeyDown(KeyCode.R) || Time.time > 5));
+        uiOverlay.enabled = false;
+    }
+    
     public void PromptE()
     {
         uiOverlay.sprite = promptE;

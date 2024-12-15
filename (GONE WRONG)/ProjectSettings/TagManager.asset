@@ -15,7 +15,6 @@ TagManager:
   - Ballroom Door
   - Checkpoint
   - Switch
-  - Flashlight
   layers:
   - Default
   - TransparentFX
