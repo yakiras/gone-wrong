@@ -71,6 +71,7 @@ public class JournalPrompts : MonoBehaviour
                 journalOverlay.sprite = journalBook;
                 journalPage1.enabled = true;
                 journalPage2.enabled = true;
+                journalOpen = true;
 
                 journalPrompted = false;
                 uiScript.ClearText();
@@ -82,6 +83,7 @@ public class JournalPrompts : MonoBehaviour
                 journalOverlay.enabled = false;
                 journalPage1.enabled = false;
                 journalPage2.enabled = false;
+                journalOpen = false;
             }
 
             journalOpen = !journalOpen;

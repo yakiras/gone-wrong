@@ -15,7 +15,6 @@ public class _Script_CameraToggle : MonoBehaviour
     public GameObject enemiesParent;
     public GameObject uiPrompts;
     public Light flashlight;
-    private UIPrompts uiScript;
 
     public AudioClip sfxCameraOn;
     public AudioClip sfxCameraOff;
@@ -29,7 +28,6 @@ public class _Script_CameraToggle : MonoBehaviour
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        uiScript = uiPrompts.GetComponent<UIPrompts>();
 
         flashlightAvailable = false;
         flashlight.enabled = false;
