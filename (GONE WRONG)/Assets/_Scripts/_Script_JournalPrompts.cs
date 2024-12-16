@@ -31,18 +31,18 @@ public class JournalPrompts : MonoBehaviour
     private int currentEntryNum = 0;
 
     private string[] JournalEntryList = { "09/10/2013\n\nForget the views, this place is way worse than I remember seeing online. Nobody in the lobby when I get out of the elevator, " +
-            "and better yet the damn thing’s not working when I turn around! Not to mention the weird shuffling noises I’m hearing down the hall. Fuck this, I’m out of " +
-            "here… After I figure out how to get the damn elevator working again. Maybe there’s a manual or something behind the help desk?\n\n",
+            "and better yet the damn thing’s gone when I turn around! Not to mention the weird shuffling noises I’m hearing down the hall. Fuck this, I’m out of " +
+            "here… After I figure out how to get the damn elevator working again. Maybe there’s a map or something behind the help desk?\n\n",
 
                                           "So apparently, according to the employee handbook hiding beneath the counter under a couple inches of dust, there’s a switch " +
-            "in the security office on the third floor that will turn off the hotel’s power and divert it to the elevator. But it also says that the door is kept locked" +
+            "in the security office on the third floor that will turn off the hotel’s power and divert it to the elevator. Maybe that’ll bring it back. But it also says that the door is kept locked" +
             ", so the only way in would be calling a janitor. It does mention something later about a janitor’s closet in the kitchen…\n\n",
 
                                           "Place must be pretty old to keep using keys for everything instead of keycards. I’ve just gotta take this up to the third floor," +
-            " flip the power, and get the hell out of here. There’s also some notes here between coworkers. Something about staff going missing, then some showing up and " +
+            " flip the power, and get the hell out of here. If that doesn’t work, there has to be something in the ballroom. There’s also some notes here between coworkers. Something about staff going missing, then some showing up and " +
             "acting weird. The notes don’t seem that old either…\n\n",
 
-                                          "So I hit the switch, grab the flashlight, and book it downstairs to the elevator. Given how nice it is in here compared to the " +
+                                          "So I hit the switch, grab the flashlight, and book it downstairs to the elevator, or the ballroom if it’s not there. Given how nice it is in here compared to the " +
             "rest of the hotel, I’d guess it’s the only room used regularly. By who? I’d prefer to live than find out.\n\n"
     };
 
